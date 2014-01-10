@@ -14,21 +14,12 @@
 		83510E91188036B80022BE1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510E90188036B80022BE1F /* AppDelegate.m */; };
 		83510E94188036B80022BE1F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83510E92188036B80022BE1F /* MainMenu.xib */; };
 		83510E96188036B80022BE1F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83510E95188036B80022BE1F /* Images.xcassets */; };
-		83510E9D188036B80022BE1F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83510E9C188036B80022BE1F /* XCTest.framework */; };
-		83510E9E188036B80022BE1F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83510E7D188036B80022BE1F /* Cocoa.framework */; };
-		83510EA6188036B80022BE1F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83510EA4188036B80022BE1F /* InfoPlist.strings */; };
-		83510EA8188036B80022BE1F /* Default_Audio_SwitcherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EA7188036B80022BE1F /* Default_Audio_SwitcherTests.m */; };
+		83510EB2188037510022BE1F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83510EB1188037510022BE1F /* CoreAudio.framework */; };
+		83510EB4188037570022BE1F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83510EB3188037560022BE1F /* CoreFoundation.framework */; };
+		83510EB618803AC10022BE1F /* doc.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83510EB518803AC10022BE1F /* doc.txt */; };
+		83510EB918805CF40022BE1F /* CaeAudioDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EB818805CF40022BE1F /* CaeAudioDataSource.m */; };
+		83510EBC18805EBC0022BE1F /* CaeAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		83510E9F188036B80022BE1F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83510E72188036B80022BE1F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 83510E79188036B80022BE1F;
-			remoteInfo = "Default Audio Switcher";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		83510E7A188036B80022BE1F /* Default Audio Switcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Default Audio Switcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,11 +36,13 @@
 		83510E90188036B80022BE1F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		83510E93188036B80022BE1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		83510E95188036B80022BE1F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		83510E9B188036B80022BE1F /* Default Audio SwitcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Default Audio SwitcherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		83510E9C188036B80022BE1F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		83510EA3188036B80022BE1F /* Default Audio SwitcherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Default Audio SwitcherTests-Info.plist"; sourceTree = "<group>"; };
-		83510EA5188036B80022BE1F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		83510EA7188036B80022BE1F /* Default_Audio_SwitcherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Default_Audio_SwitcherTests.m; sourceTree = "<group>"; };
+		83510EB1188037510022BE1F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		83510EB3188037560022BE1F /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		83510EB518803AC10022BE1F /* doc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = doc.txt; path = "Default Audio Switcher/doc.txt"; sourceTree = "<group>"; };
+		83510EB718805CF40022BE1F /* CaeAudioDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaeAudioDataSource.h; sourceTree = "<group>"; };
+		83510EB818805CF40022BE1F /* CaeAudioDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioDataSource.m; sourceTree = "<group>"; };
+		83510EBA18805EBC0022BE1F /* CaeAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaeAudioDevice.h; sourceTree = "<group>"; };
+		83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioDevice.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,16 +50,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83510EB4188037570022BE1F /* CoreFoundation.framework in Frameworks */,
+				83510EB2188037510022BE1F /* CoreAudio.framework in Frameworks */,
 				83510E7E188036B80022BE1F /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		83510E98188036B80022BE1F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				83510E9E188036B80022BE1F /* Cocoa.framework in Frameworks */,
-				83510E9D188036B80022BE1F /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +62,8 @@
 		83510E71188036B80022BE1F = {
 			isa = PBXGroup;
 			children = (
+				83510EB518803AC10022BE1F /* doc.txt */,
 				83510E83188036B80022BE1F /* Default Audio Switcher */,
-				83510EA1188036B80022BE1F /* Default Audio SwitcherTests */,
 				83510E7C188036B80022BE1F /* Frameworks */,
 				83510E7B188036B80022BE1F /* Products */,
 			);
@@ -87,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				83510E7A188036B80022BE1F /* Default Audio Switcher.app */,
-				83510E9B188036B80022BE1F /* Default Audio SwitcherTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,8 +80,9 @@
 		83510E7C188036B80022BE1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83510EB3188037560022BE1F /* CoreFoundation.framework */,
+				83510EB1188037510022BE1F /* CoreAudio.framework */,
 				83510E7D188036B80022BE1F /* Cocoa.framework */,
-				83510E9C188036B80022BE1F /* XCTest.framework */,
 				83510E7F188036B80022BE1F /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -117,8 +103,12 @@
 			children = (
 				83510E8F188036B80022BE1F /* AppDelegate.h */,
 				83510E90188036B80022BE1F /* AppDelegate.m */,
-				83510E92188036B80022BE1F /* MainMenu.xib */,
+				83510EBA18805EBC0022BE1F /* CaeAudioDevice.h */,
+				83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */,
+				83510EB718805CF40022BE1F /* CaeAudioDataSource.h */,
+				83510EB818805CF40022BE1F /* CaeAudioDataSource.m */,
 				83510E95188036B80022BE1F /* Images.xcassets */,
+				83510E92188036B80022BE1F /* MainMenu.xib */,
 				83510E84188036B80022BE1F /* Supporting Files */,
 			);
 			path = "Default Audio Switcher";
@@ -132,24 +122,6 @@
 				83510E89188036B80022BE1F /* main.m */,
 				83510E8B188036B80022BE1F /* Default Audio Switcher-Prefix.pch */,
 				83510E8C188036B80022BE1F /* Credits.rtf */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		83510EA1188036B80022BE1F /* Default Audio SwitcherTests */ = {
-			isa = PBXGroup;
-			children = (
-				83510EA7188036B80022BE1F /* Default_Audio_SwitcherTests.m */,
-				83510EA2188036B80022BE1F /* Supporting Files */,
-			);
-			path = "Default Audio SwitcherTests";
-			sourceTree = "<group>";
-		};
-		83510EA2188036B80022BE1F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				83510EA3188036B80022BE1F /* Default Audio SwitcherTests-Info.plist */,
-				83510EA4188036B80022BE1F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -174,24 +146,6 @@
 			productReference = 83510E7A188036B80022BE1F /* Default Audio Switcher.app */;
 			productType = "com.apple.product-type.application";
 		};
-		83510E9A188036B80022BE1F /* Default Audio SwitcherTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 83510EAE188036B80022BE1F /* Build configuration list for PBXNativeTarget "Default Audio SwitcherTests" */;
-			buildPhases = (
-				83510E97188036B80022BE1F /* Sources */,
-				83510E98188036B80022BE1F /* Frameworks */,
-				83510E99188036B80022BE1F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				83510EA0188036B80022BE1F /* PBXTargetDependency */,
-			);
-			name = "Default Audio SwitcherTests";
-			productName = "Default Audio SwitcherTests";
-			productReference = 83510E9B188036B80022BE1F /* Default Audio SwitcherTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -200,11 +154,6 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Chris Elsworth";
-				TargetAttributes = {
-					83510E9A188036B80022BE1F = {
-						TestTargetID = 83510E79188036B80022BE1F;
-					};
-				};
 			};
 			buildConfigurationList = 83510E75188036B80022BE1F /* Build configuration list for PBXProject "Default Audio Switcher" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -220,7 +169,6 @@
 			projectRoot = "";
 			targets = (
 				83510E79188036B80022BE1F /* Default Audio Switcher */,
-				83510E9A188036B80022BE1F /* Default Audio SwitcherTests */,
 			);
 		};
 /* End PBXProject section */
@@ -231,17 +179,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				83510E88188036B80022BE1F /* InfoPlist.strings in Resources */,
+				83510EB618803AC10022BE1F /* doc.txt in Resources */,
 				83510E96188036B80022BE1F /* Images.xcassets in Resources */,
 				83510E8E188036B80022BE1F /* Credits.rtf in Resources */,
 				83510E94188036B80022BE1F /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		83510E99188036B80022BE1F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				83510EA6188036B80022BE1F /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,27 +194,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				83510E91188036B80022BE1F /* AppDelegate.m in Sources */,
+				83510EB918805CF40022BE1F /* CaeAudioDataSource.m in Sources */,
+				83510EBC18805EBC0022BE1F /* CaeAudioDevice.m in Sources */,
 				83510E8A188036B80022BE1F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83510E97188036B80022BE1F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				83510EA8188036B80022BE1F /* Default_Audio_SwitcherTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		83510EA0188036B80022BE1F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 83510E79188036B80022BE1F /* Default Audio Switcher */;
-			targetProxy = 83510E9F188036B80022BE1F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		83510E86188036B80022BE1F /* InfoPlist.strings */ = {
@@ -298,14 +225,6 @@
 				83510E93188036B80022BE1F /* Base */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		83510EA4188036B80022BE1F /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				83510EA5188036B80022BE1F /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -405,46 +324,6 @@
 			};
 			name = Release;
 		};
-		83510EAF188036B80022BE1F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Default Audio Switcher.app/Contents/MacOS/Default Audio Switcher";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Default Audio Switcher/Default Audio Switcher-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Default Audio SwitcherTests/Default Audio SwitcherTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		83510EB0188036B80022BE1F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Default Audio Switcher.app/Contents/MacOS/Default Audio Switcher";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Default Audio Switcher/Default Audio Switcher-Prefix.pch";
-				INFOPLIST_FILE = "Default Audio SwitcherTests/Default Audio SwitcherTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -462,14 +341,6 @@
 			buildConfigurations = (
 				83510EAC188036B80022BE1F /* Debug */,
 				83510EAD188036B80022BE1F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		83510EAE188036B80022BE1F /* Build configuration list for PBXNativeTarget "Default Audio SwitcherTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				83510EAF188036B80022BE1F /* Debug */,
-				83510EB0188036B80022BE1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};

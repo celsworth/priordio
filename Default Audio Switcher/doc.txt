@@ -1,0 +1,9 @@
+Braindump / TODO
+
+Priority list, listing each audio device once per output type it supports
+	not found a way to list all possible outputs yet,
+	so we'll have to just add them as we learn about them
+
+
+Remember devices that are currently disconnected, using UUID for each one
+	check they don't change between connects/sightings
