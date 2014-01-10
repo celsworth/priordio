@@ -62,7 +62,7 @@
 		kAudioObjectPropertyElementMaster
 	};
 	
-	DataSourceListenerBlock b = ^(UInt32 inNumberAddresses,
+	AudioObjectPropertyListenerBlock b = ^(UInt32 inNumberAddresses,
 						const AudioObjectPropertyAddress *inAddresses)
 	{
 		// triggered when a datasource changes
@@ -106,7 +106,8 @@
 											  &dataSourceIdSize, &dataSourceId);
 	if (ret)
 	{
-		abort(); // FIXME
+		NSLog(@"%s kAudioDevicePropertyDataSource fail?", __PRETTY_FUNCTION__);
+		return 0;
 	}
 	return dataSourceId;
 }
@@ -122,7 +123,10 @@
 	UInt32 size = 0;
 	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &tmp, 0, NULL, &size);
 	if (ret)
-		abort(); // FIXME
+	{
+		NSLog(@"%s kAudioDevicePropertyDataSources fail?", __PRETTY_FUNCTION__);
+		return 0;
+	}
 	
 	return size;
 }
@@ -131,6 +135,11 @@
 -(NSMutableArray *)dataSources
 {
 	UInt32 count = [self dataSourceCount];
+	
+	if (count == 0)
+	{
+		return [NSMutableArray new];
+	}
 	
 	// temporary storage for the datasource results
 	UInt32 *tmp = calloc(count, sizeof(UInt32));

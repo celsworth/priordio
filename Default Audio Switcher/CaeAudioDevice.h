@@ -10,9 +10,6 @@
 
 #import "CoreAudio/CoreAudio.h"
 
-typedef void(^DataSourceListenerBlock)(UInt32 inNumberAddresses,
-									   const AudioObjectPropertyAddress *inAddresses);
-
 @interface CaeAudioDevice : NSObject {
 	AudioDeviceID _device;
 }
@@ -23,6 +20,8 @@ typedef void(^DataSourceListenerBlock)(UInt32 inNumberAddresses,
 -(id)initAsDefaultDevice;
 
 -(AudioDeviceID)deviceID;
+
+-(UInt32)currentDataSource;
 
 -(UInt32)dataSourceCount;
 -(NSMutableArray *)dataSources;
