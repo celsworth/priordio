@@ -26,6 +26,8 @@
 	if (self = [self init])
 	{
 		_device = [CaeAudioDevice defaultAudioDevice];
+		
+		[self setupNotifications];
 	}
 	
 	return self;
@@ -50,6 +52,63 @@
 		abort(); // FIXME
 	
 	return defaultDevice;
+}
+
+-(void)setupNotifications
+{
+	AudioObjectPropertyAddress addr = {
+		kAudioDevicePropertyDataSource,
+		kAudioDevicePropertyScopeOutput,
+		kAudioObjectPropertyElementMaster
+	};
+	
+	DataSourceListenerBlock b = ^(UInt32 inNumberAddresses,
+						const AudioObjectPropertyAddress *inAddresses)
+	{
+		// triggered when a datasource changes
+		
+		NSLog(@"block fired");
+		
+		UInt32 dataSourceId = [self currentDataSource];
+		
+		if (dataSourceId == 'ispk') {
+			// Recognized as internal speakers
+			NSLog(@"speakers?");
+		} else if (dataSourceId == 'hdpn') {
+			// Recognized as headphones
+			NSLog(@"headphones?");
+		}
+
+		// TODO: post NSNotification?
+		
+	};
+	
+	OSStatus ret = AudioObjectAddPropertyListenerBlock(_device, &addr,
+													   dispatch_get_main_queue(), b);
+	if (ret)
+	{
+		abort(); // FIXME
+	}
+}
+
+-(UInt32)currentDataSource
+{
+	AudioObjectPropertyAddress addr = {
+		kAudioDevicePropertyDataSource,
+		kAudioDevicePropertyScopeOutput,
+		kAudioObjectPropertyElementMaster
+	};
+	
+	UInt32 dataSourceId = 0;
+	UInt32 dataSourceIdSize = sizeof(UInt32);
+	
+	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL,
+											  &dataSourceIdSize, &dataSourceId);
+	if (ret)
+	{
+		abort(); // FIXME
+	}
+	return dataSourceId;
 }
 
 -(UInt32)dataSourceCount

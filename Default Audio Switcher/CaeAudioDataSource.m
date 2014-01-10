@@ -67,13 +67,23 @@
 
 	AudioDeviceID deviceID = [_device deviceID];
 	
-	AudioObjectSetPropertyData(kAudioObjectSystemObject, &tmpAddr, 0, NULL,
+	OSStatus ret;
+	ret = AudioObjectSetPropertyData(kAudioObjectSystemObject, &tmpAddr, 0, NULL,
 										sizeof(AudioDeviceID), &deviceID);
-
+	if (ret)
+	{
+		abort(); // FIXME
+	}
 	
 	tmpAddr.mSelector = kAudioDevicePropertyDataSource;
 	tmpAddr.mScope = kAudioDevicePropertyScopeOutput;
-	AudioObjectSetPropertyData(deviceID, &tmpAddr, 0, NULL, sizeof(UInt32), &_dataSource);
+	ret = AudioObjectSetPropertyData(deviceID, &tmpAddr, 0, NULL,
+									 sizeof(UInt32), &_dataSource);
+	if (ret)
+	{
+		abort(); // FIXME
+	}
+
 	
 }
 
