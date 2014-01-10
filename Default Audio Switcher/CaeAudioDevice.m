@@ -21,7 +21,19 @@
 	return self;
 }
 
--(id)initAsDefaultDevice
+-(id)initWithDevice:(AudioDeviceID)device
+{
+	if (self = [self init])
+	{
+		_device = device;
+		
+		[self setupNotifications];
+	}
+	
+	return self;
+}
+
+-(id)initWithDefaultDevice
 {
 	if (self = [self init])
 	{
@@ -29,6 +41,8 @@
 		
 		[self setupNotifications];
 	}
+	
+	NSLog(@"setup for %@ done", [self name]);
 	
 	return self;
 }
@@ -52,6 +66,46 @@
 		abort(); // FIXME
 	
 	return defaultDevice;
+}
++(NSArray *)audioDevices
+{
+	// return an array of all audio devices in the system
+	
+	UInt32 propSize;
+	
+	// get number of devices first
+	AudioObjectPropertyAddress addr = {
+		kAudioHardwarePropertyDevices,
+		kAudioObjectPropertyScopeGlobal,
+		kAudioObjectPropertyElementMaster
+	};
+	OSStatus ret = AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &addr, 0, NULL, &propSize);
+	if (ret)
+	{
+		NSLog(@"%s kAudioHardwarePropertyDevices/size ret=%d", __PRETTY_FUNCTION__, ret);
+		return NULL;
+	}
+	
+	UInt32 numDevices = propSize / sizeof(AudioDeviceID);
+	AudioDeviceID *deviceList = (AudioDeviceID *)calloc(numDevices, sizeof(AudioDeviceID));
+	
+	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &propSize, deviceList);
+	if (ret)
+	{
+		NSLog(@"%s kAudioHardwarePropertyDevices ret=%d", __PRETTY_FUNCTION__, ret);
+		return NULL;
+	}
+
+	NSMutableArray *tmp = [NSMutableArray new];
+	
+	for (UInt32 i=0; i < numDevices; i++)
+	{
+		CaeAudioDevice *dev = [[CaeAudioDevice alloc] initWithDevice:deviceList[i]];
+		
+		[tmp addObject:dev];
+	}
+
+	return tmp;
 }
 
 -(void)setupNotifications
@@ -89,6 +143,26 @@
 	{
 		abort(); // FIXME
 	}
+}
+
+-(NSString *)name
+{
+	AudioObjectPropertyAddress addr = {
+		kAudioObjectPropertyName,
+		kAudioObjectPropertyScopeGlobal,
+		kAudioObjectPropertyElementMaster
+	};
+	
+	CFStringRef deviceName;
+	UInt32 propSize = sizeof(CFStringRef);
+	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &deviceName);
+	if (ret)
+	{
+		NSLog(@"%s kAudioObjectPropertyName ret=%d", __PRETTY_FUNCTION__, ret);
+		return NULL;
+	}
+
+	return (__bridge NSString *)deviceName;
 }
 
 -(UInt32)currentDataSource
@@ -136,10 +210,10 @@
 {
 	UInt32 count = [self dataSourceCount];
 	
+	NSMutableArray *arr = [NSMutableArray new];
+	
 	if (count == 0)
-	{
-		return [NSMutableArray new];
-	}
+		return arr;
 	
 	// temporary storage for the datasource results
 	UInt32 *tmp = calloc(count, sizeof(UInt32));
@@ -153,18 +227,22 @@
 	
 	OSStatus ret = AudioObjectGetPropertyData(_device, &tmpAddr, 0, NULL, &tmpSize, tmp);
 	if (ret)
-		abort(); // FIXME
-	
-	NSMutableArray *arr = [NSMutableArray new];
+	{
+		NSLog(@"%s kAudioDevicePropertyDataSource fail", __PRETTY_FUNCTION__);
+		goto out;
+	}
 	
 	for (int i = 0; i < count; i++) {
 		if (tmp[i] == 0) continue;
 		
 		CaeAudioDataSource *addObj = [[CaeAudioDataSource alloc] initWithDevice:self
-															 dataSource:tmp[i]];
+																	 dataSource:tmp[i]];
 		
 		[arr addObject:addObj];
 	}
+	
+	out:
+	free(tmp);
 	
 	return arr;
 }

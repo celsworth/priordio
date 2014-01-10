@@ -19,7 +19,11 @@
 {
 	// Insert code here to initialize your application
 	
-	CaeAudioDevice *defaultDevice = [[CaeAudioDevice alloc] initAsDefaultDevice];
+	self.audioSystem = [CaeAudioSystem new];
+	
+	[self.audioSystem setupDevicesNotification];
+	
+	CaeAudioDevice *defaultDevice = [[CaeAudioDevice alloc] initWithDefaultDevice];
 		
 	NSMutableArray *dataSources = [defaultDevice dataSources];
 	
@@ -32,23 +36,6 @@
 	}];
 	
 	
-	// testing..
-	AudioObjectPropertyAddress addr = {
-		kAudioHardwarePropertyDevices,
-		kAudioObjectPropertyScopeGlobal,
-		kAudioObjectPropertyElementMaster
-	};
-	
-	AudioObjectPropertyListenerBlock b = ^(UInt32 inNumberAddresses,
-										   const AudioObjectPropertyAddress *inAddresses)
-	{
-		NSLog(@"test block fired");
-		
-		
-	};
-	
-	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &addr,
-													   dispatch_get_main_queue(), b);
 
 	
 }

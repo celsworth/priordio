@@ -19,6 +19,7 @@
 		83510EB618803AC10022BE1F /* doc.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83510EB518803AC10022BE1F /* doc.txt */; };
 		83510EB918805CF40022BE1F /* CaeAudioDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EB818805CF40022BE1F /* CaeAudioDataSource.m */; };
 		83510EBC18805EBC0022BE1F /* CaeAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */; };
+		83510EBF1880AB600022BE1F /* CaeAudioSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EBE1880AB600022BE1F /* CaeAudioSystem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,8 @@
 		83510EB818805CF40022BE1F /* CaeAudioDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioDataSource.m; sourceTree = "<group>"; };
 		83510EBA18805EBC0022BE1F /* CaeAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaeAudioDevice.h; sourceTree = "<group>"; };
 		83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioDevice.m; sourceTree = "<group>"; };
+		83510EBD1880AB600022BE1F /* CaeAudioSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaeAudioSystem.h; sourceTree = "<group>"; };
+		83510EBE1880AB600022BE1F /* CaeAudioSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioSystem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,12 +104,9 @@
 		83510E83188036B80022BE1F /* Default Audio Switcher */ = {
 			isa = PBXGroup;
 			children = (
+				83510EC01880B36D0022BE1F /* Audio Classes */,
 				83510E8F188036B80022BE1F /* AppDelegate.h */,
 				83510E90188036B80022BE1F /* AppDelegate.m */,
-				83510EBA18805EBC0022BE1F /* CaeAudioDevice.h */,
-				83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */,
-				83510EB718805CF40022BE1F /* CaeAudioDataSource.h */,
-				83510EB818805CF40022BE1F /* CaeAudioDataSource.m */,
 				83510E95188036B80022BE1F /* Images.xcassets */,
 				83510E92188036B80022BE1F /* MainMenu.xib */,
 				83510E84188036B80022BE1F /* Supporting Files */,
@@ -124,6 +124,19 @@
 				83510E8C188036B80022BE1F /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		83510EC01880B36D0022BE1F /* Audio Classes */ = {
+			isa = PBXGroup;
+			children = (
+				83510EB718805CF40022BE1F /* CaeAudioDataSource.h */,
+				83510EB818805CF40022BE1F /* CaeAudioDataSource.m */,
+				83510EBA18805EBC0022BE1F /* CaeAudioDevice.h */,
+				83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */,
+				83510EBD1880AB600022BE1F /* CaeAudioSystem.h */,
+				83510EBE1880AB600022BE1F /* CaeAudioSystem.m */,
+			);
+			name = "Audio Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +210,7 @@
 				83510EB918805CF40022BE1F /* CaeAudioDataSource.m in Sources */,
 				83510EBC18805EBC0022BE1F /* CaeAudioDevice.m in Sources */,
 				83510E8A188036B80022BE1F /* main.m in Sources */,
+				83510EBF1880AB600022BE1F /* CaeAudioSystem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

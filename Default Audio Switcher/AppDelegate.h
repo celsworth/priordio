@@ -8,8 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "CaeAudioSystem.h"
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+
+@property (nonatomic, retain) CaeAudioSystem *audioSystem;
 
 @end

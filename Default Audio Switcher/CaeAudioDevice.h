@@ -17,7 +17,8 @@
 // array of AudioOutput
 @property (nonatomic, retain) NSMutableArray *outputs;
 
--(id)initAsDefaultDevice;
+-(id)initWithDefaultDevice;
+-(id)initWithDevice:(AudioDeviceID)device;
 
 -(AudioDeviceID)deviceID;
 
