@@ -43,4 +43,30 @@
 	
 	
 }
+
+-(void)setupDefaultChangeNotification
+{
+	// testing..
+	AudioObjectPropertyAddress addr = {
+		kAudioHardwarePropertyDefaultOutputDevice,
+		kAudioObjectPropertyScopeGlobal,
+		kAudioObjectPropertyElementMaster
+	};
+	
+	AudioObjectPropertyListenerBlock b = ^(UInt32 inNumberAddresses,
+										   const AudioObjectPropertyAddress *inAddresses)
+	{
+		NSLog(@"default output changed?");
+		
+		
+	};
+	
+	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &addr,
+													   dispatch_get_main_queue(), b);
+	
+	
+
+	
+}
+
 @end

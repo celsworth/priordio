@@ -11,5 +11,6 @@
 @interface CaeAudioSystem : NSObject
 
 -(void)setupDevicesNotification;
+-(void)setupDefaultChangeNotification;
 
 @end

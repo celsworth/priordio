@@ -35,14 +35,10 @@
 
 -(id)initWithDefaultDevice
 {
-	if (self = [self init])
+	if (self = [self initWithDevice:[CaeAudioDevice defaultAudioDevice]])
 	{
-		_device = [CaeAudioDevice defaultAudioDevice];
-		
-		[self setupNotifications];
+		NSLog(@"setup for default %@ done", [self name]);
 	}
-	
-	NSLog(@"setup for %@ done", [self name]);
 	
 	return self;
 }
@@ -125,10 +121,10 @@
 		
 		UInt32 dataSourceId = [self currentDataSource];
 		
-		if (dataSourceId == 'ispk') {
+		if (dataSourceId == kAudioDeviceOutputSpeaker) {
 			// Recognized as internal speakers
 			NSLog(@"speakers?");
-		} else if (dataSourceId == 'hdpn') {
+		} else if (dataSourceId == kAudioDeviceOutputHeadphone) {
 			// Recognized as headphones
 			NSLog(@"headphones?");
 		}

@@ -23,6 +23,8 @@
 	
 	[self.audioSystem setupDevicesNotification];
 	
+	[self.audioSystem setupDefaultChangeNotification];
+	
 	CaeAudioDevice *defaultDevice = [[CaeAudioDevice alloc] initWithDefaultDevice];
 		
 	NSMutableArray *dataSources = [defaultDevice dataSources];

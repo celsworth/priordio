@@ -10,6 +10,14 @@
 
 #import "CoreAudio/CoreAudio.h"
 
+// these aren't defined by apple for some reason, so we'll do them
+enum {
+	kAudioDeviceOutputSpeaker   = 'ispk',
+	kAudioDeviceOutputHeadphone = 'hdpn'
+	// spdif/digital?
+};
+
+
 @interface CaeAudioDevice : NSObject {
 	AudioDeviceID _device;
 }
