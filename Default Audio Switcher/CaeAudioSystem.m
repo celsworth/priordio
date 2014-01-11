@@ -81,9 +81,7 @@
 	// allocate space for those devices
 	UInt32 numDevices = propSize / sizeof(AudioDeviceID);
 	AudioDeviceID *deviceList = (AudioDeviceID *)calloc(numDevices, sizeof(AudioDeviceID));
-	
-	NSLog(@"system has %d audio devices", numDevices);
-	
+		
 	// fetch device info
 	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &propSize, deviceList);
 	if (ret)
@@ -96,7 +94,17 @@
 	for (UInt32 i = 0; i < numDevices; i++)
 	{
 		CaeAudioDevice *dev = [[CaeAudioDevice alloc] initWithDevice:deviceList[i]];
-		[tmp addObject:dev];
+		
+		// only add devices with some output channels (this gets rid of the internal mic etc)
+		if ([dev outputChannelCount] > 0)
+		{
+			[tmp addObject:dev];
+		}
+		else
+		{
+			// debugging for now
+			NSLog(@"SKIPPING %@ BECAUSE OUTPUTCHANNELCOUNT==0", [dev name]);
+		}
 	}
 	
 	out:

@@ -15,7 +15,8 @@
 
 -(id)initWithDevice:(AudioDeviceID)device
 {
-	NSLog(@"init with device=%d", device);
+	//NSLog(@"init CaeAudioDevice with device=%d", device);
+	
 	if (self = [super init])
 	{
 		_device = device;
@@ -40,8 +41,10 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ (%d output channels) (%@)",
-			[self name], [self outputChannelCount], [[self dataSources] componentsJoinedByString:@", "]];
+	return [NSString stringWithFormat:@"%@ %@ (%d output channels) (%@)",
+			[self name], [self uid],
+			[self outputChannelCount],
+			[[self dataSources] componentsJoinedByString:@", "]];
 }
 
 -(AudioDeviceID)deviceID
@@ -121,6 +124,28 @@
 
 	return (__bridge NSString *)deviceName;
 }
+
+-(NSString *)uid
+{
+	AudioObjectPropertyAddress addr = {
+		kAudioDevicePropertyDeviceUID,
+		kAudioObjectPropertyScopeGlobal,
+		kAudioObjectPropertyElementMaster
+	};
+	
+	CFStringRef uid;
+	UInt32 propSize = sizeof(CFStringRef);
+	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &uid);
+	if (ret)
+	{
+		NSLog(@"%s kAudioDevicePropertyDeviceUID ret=%d", __PRETTY_FUNCTION__, ret);
+		return NULL;
+	}
+	
+	return (__bridge NSString *)uid;
+	//return (__bridge NSString *)deviceName;
+}
+
 
 -(UInt32)outputChannelCount
 {

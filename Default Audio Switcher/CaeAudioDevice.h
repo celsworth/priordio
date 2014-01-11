@@ -31,8 +31,11 @@ enum {
 
 -(AudioDeviceID)deviceID;
 
--(UInt32)currentDataSource;
+-(NSString *)name;
+-(NSString *)uid;
+-(UInt32)outputChannelCount;
 
+-(UInt32)currentDataSource;
 -(UInt32)dataSourceCount;
 -(NSArray *)enumerateDataSources;
 
