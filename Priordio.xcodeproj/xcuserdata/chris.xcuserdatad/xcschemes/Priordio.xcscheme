@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "83510E79188036B80022BE1F"
-               BuildableName = "Default Audio Switcher.app"
+               BuildableName = "Priordio.app"
                BlueprintName = "Priordio"
                ReferencedContainer = "container:Priordio.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83510E79188036B80022BE1F"
-            BuildableName = "Default Audio Switcher.app"
+            BuildableName = "Priordio.app"
             BlueprintName = "Priordio"
             ReferencedContainer = "container:Priordio.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83510E79188036B80022BE1F"
-            BuildableName = "Default Audio Switcher.app"
+            BuildableName = "Priordio.app"
             BlueprintName = "Priordio"
             ReferencedContainer = "container:Priordio.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83510E79188036B80022BE1F"
-            BuildableName = "Default Audio Switcher.app"
+            BuildableName = "Priordio.app"
             BlueprintName = "Priordio"
             ReferencedContainer = "container:Priordio.xcodeproj">
          </BuildableReference>
