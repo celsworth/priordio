@@ -33,7 +33,10 @@ enum {
 
 -(NSString *)name;
 -(NSString *)uid;
+-(UInt32)transportType;
 -(UInt32)outputChannelCount;
+
++(NSString *)transportTypeAsName:(UInt32)transportType;
 
 -(UInt32)currentDataSource;
 -(UInt32)dataSourceCount;

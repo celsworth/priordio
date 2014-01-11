@@ -26,6 +26,8 @@
 		[self setupNotifications];
 	}
 	
+	[self transportType];
+	
 	return self;
 }
 
@@ -41,8 +43,8 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@ (%d output channels) (%@)",
-			[self name], [self uid],
+	return [NSString stringWithFormat:@"%@ %@ %@ (%d output channels) (%@)",
+			[self name], [self uid], [CaeAudioDevice transportTypeAsName:[self transportType]],
 			[self outputChannelCount],
 			[[self dataSources] componentsJoinedByString:@", "]];
 }
@@ -97,6 +99,7 @@
 		
 	};
 	
+	
 	OSStatus ret = AudioObjectAddPropertyListenerBlock(_device, &addr,
 													   dispatch_get_main_queue(), b);
 	if (ret)
@@ -118,7 +121,7 @@
 	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &deviceName);
 	if (ret)
 	{
-		NSLog(@"%s kAudioObjectPropertyName ret=%d", __PRETTY_FUNCTION__, ret);
+		NSLog(@"%s kAudioObjectPropertyName ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
 		return NULL;
 	}
 
@@ -138,12 +141,54 @@
 	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &uid);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDeviceUID ret=%d", __PRETTY_FUNCTION__, ret);
+		NSLog(@"%s kAudioDevicePropertyDeviceUID ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
 		return NULL;
 	}
 	
 	return (__bridge NSString *)uid;
 	//return (__bridge NSString *)deviceName;
+}
+
+
+-(UInt32)transportType
+{
+	AudioObjectPropertyAddress addr = {
+		kAudioDevicePropertyTransportType,
+		kAudioDevicePropertyScopeOutput,
+		kAudioObjectPropertyElementMaster
+	};
+
+	
+	UInt32 tt;
+	UInt32 propSize = sizeof(CFStringRef);
+	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &tt);
+	if (ret)
+	{
+		NSLog(@"%s kAudioDevicePropertyTransportType ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		return 0;
+	}
+
+	return tt;
+}
++(NSString *)transportTypeAsName:(UInt32)transportType
+{
+	switch (transportType)
+	{
+		case kAudioDeviceTransportTypeBuiltIn:       return @"Built-in";
+		case kAudioDeviceTransportTypeAggregate:     return @"Aggregate";
+		case kAudioDeviceTransportTypeAutoAggregate: return @"Auto Aggregate";
+		case kAudioDeviceTransportTypeVirtual:       return @"Virtual";
+		case kAudioDeviceTransportTypePCI:           return @"PCI";
+		case kAudioDeviceTransportTypeUSB:           return @"USB";
+		case kAudioDeviceTransportTypeFireWire:      return @"FireWire";
+		case kAudioDeviceTransportTypeBluetooth:     return @"Bluetooth";
+		case kAudioDeviceTransportTypeHDMI:          return @"HDMI";
+		case kAudioDeviceTransportTypeDisplayPort:   return @"DisplayPort";
+		case kAudioDeviceTransportTypeAirPlay:       return @"AirPlay";
+		case kAudioDeviceTransportTypeAVB:           return @"AVB";
+		case kAudioDeviceTransportTypeThunderbolt:   return @"Thunderbolt";
+		default:                                     return @"UNKNOWN";
+	}
 }
 
 
@@ -159,7 +204,7 @@
 	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyStreamConfiguration/size fail?", __PRETTY_FUNCTION__);
+		NSLog(@"%s kAudioDevicePropertyStreamConfiguration/size ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
 		return 0;
 	}
 	
@@ -169,7 +214,7 @@
 	ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &tmpSize, tmp);
 	if (ret)
 	{
-		NSLog(@"%s kAudioObjectPropertyName ret=%d", __PRETTY_FUNCTION__, ret);
+		NSLog(@"%s kAudioDevicePropertyStreamConfiguration ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
 		return 0;
 	}
 	
@@ -195,7 +240,7 @@
 											  &dataSourceIdSize, &dataSourceId);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDataSource fail?", __PRETTY_FUNCTION__);
+		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
 		return 0;
 	}
 	return dataSourceId;
@@ -209,6 +254,8 @@
 		kAudioObjectPropertyElementMaster
 	};
 	
+	// could use AudioObjectHasProperty instead
+
 	UInt32 size = 0;
 	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
 	if (ret == kAudioHardwareUnknownPropertyError)
@@ -216,7 +263,7 @@
 		// this just means the device doesn't support datasources, but it has one nonetheless
 		return 1;
 	}
-	
+		
 	// any other error
 	if (ret)
 	{
@@ -246,6 +293,8 @@
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
 	};
+	
+	// could use AudioObjectHasProperty instead
 	
 	OSStatus ret = AudioObjectGetPropertyData(_device, &tmpAddr, 0, NULL, &tmpSize, tmp);
 	if (ret == kAudioHardwareUnknownPropertyError)
