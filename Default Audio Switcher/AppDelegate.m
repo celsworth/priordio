@@ -38,7 +38,28 @@
 		NSLog(@"datasource is %@", [obj name]);
 	}];
 	
+	[self.deviceListTableView reloadData];
+}
+
+
+// testing tableview stuff
+-(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+	return [[self.audioSystem devices] count];
+}
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn
+			row:(NSInteger)rowIndex
+{
+	NSLog(@"%@", [aTableColumn identifier]);
 	
+	CaeAudioDevice *dev = [self.audioSystem devices][rowIndex];
+	
+	if ([[aTableColumn identifier] isEqualToString:@"device"])
+		return [dev name];
+	
+	else
+		return [[[dev dataSources] lastObject] name];
 }
 
 @end

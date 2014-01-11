@@ -20,6 +20,7 @@
 		83510EB918805CF40022BE1F /* CaeAudioDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EB818805CF40022BE1F /* CaeAudioDataSource.m */; };
 		83510EBC18805EBC0022BE1F /* CaeAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */; };
 		83510EBF1880AB600022BE1F /* CaeAudioSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EBE1880AB600022BE1F /* CaeAudioSystem.m */; };
+		83510EC6188106270022BE1F /* DeviceList.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510EC5188106270022BE1F /* DeviceList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		83510EBB18805EBC0022BE1F /* CaeAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioDevice.m; sourceTree = "<group>"; };
 		83510EBD1880AB600022BE1F /* CaeAudioSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaeAudioSystem.h; sourceTree = "<group>"; };
 		83510EBE1880AB600022BE1F /* CaeAudioSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioSystem.m; sourceTree = "<group>"; };
+		83510EC4188106270022BE1F /* DeviceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceList.h; sourceTree = "<group>"; };
+		83510EC5188106270022BE1F /* DeviceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				83510E95188036B80022BE1F /* Images.xcassets */,
 				83510E92188036B80022BE1F /* MainMenu.xib */,
 				83510E84188036B80022BE1F /* Supporting Files */,
+				83510EC4188106270022BE1F /* DeviceList.h */,
+				83510EC5188106270022BE1F /* DeviceList.m */,
 			);
 			path = "Default Audio Switcher";
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				83510EBC18805EBC0022BE1F /* CaeAudioDevice.m in Sources */,
 				83510E8A188036B80022BE1F /* main.m in Sources */,
 				83510EBF1880AB600022BE1F /* CaeAudioSystem.m in Sources */,
+				83510EC6188106270022BE1F /* DeviceList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

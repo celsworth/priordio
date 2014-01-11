@@ -10,10 +10,13 @@
 
 #import "CaeAudioSystem.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource>
 
 @property (assign) IBOutlet NSWindow *window;
 
 @property (nonatomic, retain) CaeAudioSystem *audioSystem;
+
+
+@property (nonatomic, weak) IBOutlet NSTableView *deviceListTableView;
 
 @end
