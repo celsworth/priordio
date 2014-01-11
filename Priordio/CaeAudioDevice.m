@@ -186,6 +186,7 @@
 		case kAudioDeviceTransportTypeAirPlay:       return @"AirPlay";
 		case kAudioDeviceTransportTypeAVB:           return @"AVB";
 		case kAudioDeviceTransportTypeThunderbolt:   return @"Thunderbolt";
+		case kAudioDeviceTransportTypeUnknown:
 		default:                                     return @"UNKNOWN";
 	}
 }
