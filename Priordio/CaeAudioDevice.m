@@ -159,7 +159,7 @@
 
 	
 	UInt32 tt;
-	UInt32 propSize = sizeof(CFStringRef);
+	UInt32 propSize = sizeof(UInt32);
 	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &tt);
 	if (ret)
 	{
