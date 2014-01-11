@@ -324,8 +324,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Default Audio Switcher/Priordio-Prefix.pch";
-				INFOPLIST_FILE = "Default Audio Switcher/Priordio-Info.plist";
+				GCC_PREFIX_HEADER = "Priordio/Priordio-Prefix.pch";
+				INFOPLIST_FILE = "Priordio/Priordio-Info.plist";
 				PRODUCT_NAME = Priordio;
 				WRAPPER_EXTENSION = app;
 			};
@@ -337,8 +337,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Default Audio Switcher/Priordio-Prefix.pch";
-				INFOPLIST_FILE = "Default Audio Switcher/Priordio-Info.plist";
+				GCC_PREFIX_HEADER = "Priordio/Priordio-Prefix.pch";
+				INFOPLIST_FILE = "Priordio/Priordio-Info.plist";
 				PRODUCT_NAME = Priordio;
 				WRAPPER_EXTENSION = app;
 			};
