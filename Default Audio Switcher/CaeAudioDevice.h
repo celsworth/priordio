@@ -19,11 +19,12 @@ enum {
 
 
 @interface CaeAudioDevice : NSObject {
-	AudioDeviceID _device;
 }
 
 // array of AudioOutput
-@property (nonatomic, retain) NSMutableArray *outputs;
+@property (nonatomic, retain) NSArray *dataSources;
+
+@property (nonatomic, assign) AudioDeviceID device;
 
 -(id)initWithDefaultDevice;
 -(id)initWithDevice:(AudioDeviceID)device;
@@ -33,6 +34,6 @@ enum {
 -(UInt32)currentDataSource;
 
 -(UInt32)dataSourceCount;
--(NSMutableArray *)dataSources;
+-(NSArray *)enumerateDataSources;
 
 @end

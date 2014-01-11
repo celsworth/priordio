@@ -22,23 +22,22 @@
 	self.audioSystem = [CaeAudioSystem new];
 	
 	[self.audioSystem setupDevicesNotification];
-	
 	[self.audioSystem setupDefaultChangeNotification];
 	
+	NSLog(@"%@", [self.audioSystem devices]);
+	
+	
 	CaeAudioDevice *defaultDevice = [[CaeAudioDevice alloc] initWithDefaultDevice];
-		
-	NSMutableArray *dataSources = [defaultDevice dataSources];
+	
+	NSArray *dataSources = [defaultDevice dataSources];
 	
 	NSLog(@"default device has %lu datasources", [dataSources count]);
-	
 	NSLog(@"current datasource on default device is %d", [defaultDevice currentDataSource]);
 	
 	[dataSources enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSLog(@"datasource is %@", [obj name]);
 	}];
 	
-	
-
 	
 }
 

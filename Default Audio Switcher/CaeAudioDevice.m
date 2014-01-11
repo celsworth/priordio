@@ -8,25 +8,20 @@
 
 #import "CaeAudioDevice.h"
 
+#import "CaeAudioSystem.h"
 #import "CaeAudioDataSource.h"
 
 @implementation CaeAudioDevice
 
--(id)init
-{
-	if (self = [super init])
-	{
-		_outputs = [NSMutableArray new];
-	}
-	return self;
-}
-
 -(id)initWithDevice:(AudioDeviceID)device
 {
-	if (self = [self init])
+	NSLog(@"init with device=%d", device);
+	if (self = [super init])
 	{
 		_device = device;
 		
+		_dataSources = [self enumerateDataSources];
+
 		[self setupNotifications];
 	}
 	
@@ -41,6 +36,12 @@
 	}
 	
 	return self;
+}
+
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ (%d output channels) (%@)",
+			[self name], [self outputChannelCount], [[self dataSources] componentsJoinedByString:@", "]];
 }
 
 -(AudioDeviceID)deviceID
@@ -62,46 +63,6 @@
 		abort(); // FIXME
 	
 	return defaultDevice;
-}
-+(NSArray *)audioDevices
-{
-	// return an array of all audio devices in the system
-	
-	UInt32 propSize;
-	
-	// get number of devices first
-	AudioObjectPropertyAddress addr = {
-		kAudioHardwarePropertyDevices,
-		kAudioObjectPropertyScopeGlobal,
-		kAudioObjectPropertyElementMaster
-	};
-	OSStatus ret = AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &addr, 0, NULL, &propSize);
-	if (ret)
-	{
-		NSLog(@"%s kAudioHardwarePropertyDevices/size ret=%d", __PRETTY_FUNCTION__, ret);
-		return NULL;
-	}
-	
-	UInt32 numDevices = propSize / sizeof(AudioDeviceID);
-	AudioDeviceID *deviceList = (AudioDeviceID *)calloc(numDevices, sizeof(AudioDeviceID));
-	
-	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &propSize, deviceList);
-	if (ret)
-	{
-		NSLog(@"%s kAudioHardwarePropertyDevices ret=%d", __PRETTY_FUNCTION__, ret);
-		return NULL;
-	}
-
-	NSMutableArray *tmp = [NSMutableArray new];
-	
-	for (UInt32 i=0; i < numDevices; i++)
-	{
-		CaeAudioDevice *dev = [[CaeAudioDevice alloc] initWithDevice:deviceList[i]];
-		
-		[tmp addObject:dev];
-	}
-
-	return tmp;
 }
 
 -(void)setupNotifications
@@ -161,6 +122,39 @@
 	return (__bridge NSString *)deviceName;
 }
 
+-(UInt32)outputChannelCount
+{
+	AudioObjectPropertyAddress addr = {
+		kAudioDevicePropertyStreamConfiguration,
+		kAudioDevicePropertyScopeOutput,
+		kAudioObjectPropertyElementMaster
+	};
+	
+	UInt32 size = 0;
+	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
+	if (ret)
+	{
+		NSLog(@"%s kAudioDevicePropertyStreamConfiguration/size fail?", __PRETTY_FUNCTION__);
+		return 0;
+	}
+	
+	AudioBufferList *tmp = calloc(size, sizeof(AudioBufferList *));
+	UInt32 tmpSize = size * sizeof(AudioBufferList *);
+		
+	ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &tmpSize, tmp);
+	if (ret)
+	{
+		NSLog(@"%s kAudioObjectPropertyName ret=%d", __PRETTY_FUNCTION__, ret);
+		return 0;
+	}
+	
+	UInt32 outputChannelCount = 0;
+	for(int j = 0 ; j<tmp->mNumberBuffers ; j++)
+		outputChannelCount += tmp->mBuffers[j].mNumberChannels;
+	
+	return outputChannelCount;
+}
+
 -(UInt32)currentDataSource
 {
 	AudioObjectPropertyAddress addr = {
@@ -184,25 +178,32 @@
 
 -(UInt32)dataSourceCount
 {
-	AudioObjectPropertyAddress tmp = {
+	AudioObjectPropertyAddress addr = {
 		kAudioDevicePropertyDataSources,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
 	};
 	
 	UInt32 size = 0;
-	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &tmp, 0, NULL, &size);
+	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
+	if (ret == kAudioHardwareUnknownPropertyError)
+	{
+		// this just means the device doesn't support datasources, but it has one nonetheless
+		return 1;
+	}
+	
+	// any other error
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDataSources fail?", __PRETTY_FUNCTION__);
+		NSLog(@"%s %@ kAudioDevicePropertyDataSources/size ret=%@",
+			  __PRETTY_FUNCTION__, self, [CaeAudioSystem osError:ret]);
 		return 0;
 	}
 	
 	return size;
 }
 
-// fix this to use the self.outputs property, build it somewhere else (init/notification?)
--(NSMutableArray *)dataSources
+-(NSArray *)enumerateDataSources
 {
 	UInt32 count = [self dataSourceCount];
 	
@@ -222,9 +223,17 @@
 	};
 	
 	OSStatus ret = AudioObjectGetPropertyData(_device, &tmpAddr, 0, NULL, &tmpSize, tmp);
+	if (ret == kAudioHardwareUnknownPropertyError)
+	{
+		// this just means the device doesn't support datasources, but it has one nonetheless
+		[arr addObject:[[CaeAudioDataSource alloc] initWithDevice:self]];
+		return arr;
+	}
+
+	// any other error
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDataSource fail", __PRETTY_FUNCTION__);
+		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
 		goto out;
 	}
 	
@@ -233,14 +242,13 @@
 		
 		CaeAudioDataSource *addObj = [[CaeAudioDataSource alloc] initWithDevice:self
 																	 dataSource:tmp[i]];
-		
 		[arr addObject:addObj];
 	}
 	
 	out:
 	free(tmp);
 	
-	return arr;
+	return [NSArray arrayWithArray:arr];
 }
 
 @end

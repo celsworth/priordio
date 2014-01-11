@@ -10,6 +10,12 @@
 
 @interface CaeAudioSystem : NSObject
 
+@property (nonatomic, retain) NSArray *devices;
+
++(NSString *)osError:(UInt32)err;
+
++(NSArray *)enumerateDevices;
+
 -(void)setupDevicesNotification;
 -(void)setupDefaultChangeNotification;
 

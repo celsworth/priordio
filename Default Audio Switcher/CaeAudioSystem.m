@@ -10,15 +10,100 @@
 
 #import "CoreAudio/CoreAudio.h"
 
+#import "CaeAudioDevice.h"
+
 @implementation CaeAudioSystem
 
 -(id)init
 {
 	if (self = [super init])
 	{
-		
+		_devices = [CaeAudioSystem enumerateDevices];
 	}
 	return self;
+}
+
++(NSString *)osError:(UInt32)err
+{
+	switch (err) {
+		case kAudioHardwareNoError:
+			return @"kAudioHardwareNoError";
+		case kAudioHardwareNotRunningError:
+			return @"kAudioHardwareNotRunningError";
+		case kAudioHardwareUnspecifiedError:
+			return @"kAudioHardwareUnspecifiedError";
+		case kAudioHardwareUnknownPropertyError:
+			return @"kAudioHardwareUnknownPropertyError";
+		case kAudioHardwareBadPropertySizeError:
+			return @"kAudioHardwareBadPropertySizeError";
+		case kAudioHardwareIllegalOperationError:
+			return @"kAudioHardwareIllegalOperationError";
+		case kAudioHardwareBadObjectError:
+			return @"kAudioHardwareBadObjectError";
+		case kAudioHardwareBadDeviceError:
+			return @"kAudioHardwareBadDeviceError";
+		case kAudioHardwareBadStreamError:
+			return @"kAudioHardwareBadStreamError";
+		case kAudioHardwareUnsupportedOperationError:
+			return @"kAudioHardwareUnsupportedOperationError";
+		case kAudioDeviceUnsupportedFormatError:
+			return @"kAudioDeviceUnsupportedFormatError";
+		case kAudioDevicePermissionsError:
+			return @"kAudioDevicePermissionsError";
+			
+		default:
+			return @"UNKNOWN ERROR";
+	}
+	
+}
+
++(NSArray *)enumerateDevices
+{
+	// return an array of all audio devices in the system
+	
+	NSMutableArray *tmp = [NSMutableArray new];
+	
+	UInt32 propSize;
+	
+	// get number of devices first
+	AudioObjectPropertyAddress addr = {
+		kAudioHardwarePropertyDevices,
+		kAudioObjectPropertyScopeOutput,
+		kAudioObjectPropertyElementMaster
+	};
+	OSStatus ret = AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &addr, 0, NULL, &propSize);
+	if (ret)
+	{
+		NSLog(@"%s kAudioHardwarePropertyDevices/size ret=%d", __PRETTY_FUNCTION__, ret);
+		return tmp;
+	}
+	
+	// allocate space for those devices
+	UInt32 numDevices = propSize / sizeof(AudioDeviceID);
+	AudioDeviceID *deviceList = (AudioDeviceID *)calloc(numDevices, sizeof(AudioDeviceID));
+	
+	NSLog(@"system has %d audio devices", numDevices);
+	
+	// fetch device info
+	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &propSize, deviceList);
+	if (ret)
+	{
+		NSLog(@"%s kAudioHardwarePropertyDevices ret=%d", __PRETTY_FUNCTION__, ret);
+		goto out;
+	}
+	
+	// and convert to a more useful form
+	for (UInt32 i = 0; i < numDevices; i++)
+	{
+		CaeAudioDevice *dev = [[CaeAudioDevice alloc] initWithDevice:deviceList[i]];
+		[tmp addObject:dev];
+	}
+	
+	out:
+	free(deviceList);
+	
+	//return tmp;
+	return [NSArray arrayWithArray:tmp];
 }
 
 -(void)setupDevicesNotification

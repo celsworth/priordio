@@ -22,12 +22,28 @@
 	}
 	return self;
 }
+-(id)initWithDevice:(CaeAudioDevice *)device;
+{
+	if (self = [super init])
+	{
+		_device = device;
+	}
+	return self;
+}
 
-
+-(NSString *)description
+{
+	return [self name];
+}
 
 -(NSString *)name
 {
-	AudioObjectPropertyAddress tmpSourceAddr = {
+	// nil dataSource means we're not "real", we're a made up source because the device
+	// reported it didn't support multiple dataSources
+	if (!_dataSource)
+		return @"default";
+	
+	AudioObjectPropertyAddress addr = {
 		kAudioDevicePropertyDataSourceNameForIDCFString,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
@@ -35,15 +51,15 @@
 	
 	CFStringRef theAnswer = NULL;
 	
-	AudioValueTranslation audioValueTranslation;
-	audioValueTranslation.mInputData = (void *)&_dataSource;
-	audioValueTranslation.mInputDataSize = sizeof(UInt32);
-	audioValueTranslation.mOutputData = (void *)&theAnswer;
-	audioValueTranslation.mOutputDataSize = sizeof(CFStringRef);
+	AudioValueTranslation avt;
+	avt.mInputData = (void *)&_dataSource;
+	avt.mInputDataSize = sizeof(UInt32);
+	avt.mOutputData = (void *)&theAnswer;
+	avt.mOutputDataSize = sizeof(CFStringRef);
 	
-	UInt32 audioValueTranslationSize = sizeof(audioValueTranslation);
+	UInt32 avtSize = sizeof(avt);
 	
-	OSStatus ret = AudioObjectGetPropertyData([_device deviceID], &tmpSourceAddr, 0, NULL, &audioValueTranslationSize, &audioValueTranslation);
+	OSStatus ret = AudioObjectGetPropertyData([_device deviceID], &addr, 0, NULL, &avtSize, &avt);
 	if (ret)
 	{
 		// AudioObjectGetPropertyData failure
