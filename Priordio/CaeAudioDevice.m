@@ -146,7 +146,6 @@
 	}
 	
 	return (__bridge NSString *)uid;
-	//return (__bridge NSString *)deviceName;
 }
 
 
