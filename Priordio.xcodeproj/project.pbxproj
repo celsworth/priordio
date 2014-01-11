@@ -40,7 +40,7 @@
 		83510E95188036B80022BE1F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		83510EB1188037510022BE1F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		83510EB3188037560022BE1F /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		83510EB518803AC10022BE1F /* doc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = doc.txt; path = "Default Audio Switcher/doc.txt"; sourceTree = "<group>"; };
+		83510EB518803AC10022BE1F /* doc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = doc.txt; path = Priordio/doc.txt; sourceTree = "<group>"; };
 		83510EB718805CF40022BE1F /* CaeAudioDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaeAudioDataSource.h; sourceTree = "<group>"; };
 		83510EB818805CF40022BE1F /* CaeAudioDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaeAudioDataSource.m; sourceTree = "<group>"; };
 		83510EBA18805EBC0022BE1F /* CaeAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaeAudioDevice.h; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				83510EB518803AC10022BE1F /* doc.txt */,
-				83510E83188036B80022BE1F /* Default Audio Switcher */,
+				83510E83188036B80022BE1F /* Priordio */,
 				83510E7C188036B80022BE1F /* Frameworks */,
 				83510E7B188036B80022BE1F /* Products */,
 			);
@@ -104,7 +104,7 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		83510E83188036B80022BE1F /* Default Audio Switcher */ = {
+		83510E83188036B80022BE1F /* Priordio */ = {
 			isa = PBXGroup;
 			children = (
 				83510EC01880B36D0022BE1F /* Audio Classes */,
@@ -116,7 +116,7 @@
 				83510EC4188106270022BE1F /* DeviceList.h */,
 				83510EC5188106270022BE1F /* DeviceList.m */,
 			);
-			path = "Default Audio Switcher";
+			path = Priordio;
 			sourceTree = "<group>";
 		};
 		83510E84188036B80022BE1F /* Supporting Files */ = {
@@ -363,6 +363,7 @@
 				83510EAD188036B80022BE1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
