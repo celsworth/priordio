@@ -165,7 +165,7 @@
 			dependencies = (
 			);
 			name = Priordio;
-			productName = "Default Audio Switcher";
+			productName = "Priordio";
 			productReference = 83510E7A188036B80022BE1F /* Priordio.app */;
 			productType = "com.apple.product-type.application";
 		};
