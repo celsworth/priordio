@@ -17,6 +17,8 @@
  
  and if an AudioDevice has more than one DataSource (AirPlay, generally?)
  it may appear more than once with different targets to choose.
+ 
+ (well, that was the plan, not sure now, maybe just use DataSource?)
  */
 
 @implementation OutputList
