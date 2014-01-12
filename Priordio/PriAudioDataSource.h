@@ -10,10 +10,9 @@
 
 #import "CoreAudio/CoreAudio.h"
 
-#import "PriAudioDevice.h"
+@class PriAudioDevice;
+@interface PriAudioDataSource : NSObject
 
-@interface PriAudioDataSource : NSObject {
-}
 
 // the audio device this output belongs to
 @property (nonatomic, retain) PriAudioDevice *device;

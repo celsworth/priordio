@@ -11,6 +11,8 @@
 
 #import "PriAudioDataSource.h"
 
+#import "PriAudioDevice.h"
+
 @implementation PriAudioDataSource
 
 -(id)initWithDevice:(PriAudioDevice *)device dataSource:(UInt32)dataSource;

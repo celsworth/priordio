@@ -10,6 +10,8 @@
 
 #import "CoreAudio/CoreAudio.h"
 
+#import "PriAudioDataSource.h"
+
 // these aren't defined by apple for some reason, so we'll do them
 enum {
 	kAudioDeviceOutputSpeaker   = 'ispk',
@@ -18,8 +20,7 @@ enum {
 };
 
 
-@interface PriAudioDevice : NSObject {
-}
+@interface PriAudioDevice : NSObject
 
 // array of AudioOutputs
 @property (nonatomic, retain) NSArray *dataSources;

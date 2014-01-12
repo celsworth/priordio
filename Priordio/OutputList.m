@@ -8,9 +8,8 @@
 
 #import "OutputList.h"
 
-#import "PriOutput.h"
+//#import "PriOutput.h" // might use this soon..
 
-#import "PriAudioDataSource.h"
 /*
  each row in our priorities table is a PriOutput
  which is actually a PriAudioDevice+PriAudioDataSource combination.
