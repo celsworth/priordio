@@ -22,7 +22,7 @@
 		_device = device;
 		
 		_dataSources = [self enumerateDataSources];
-
+		
 		[self setupNotifications];
 	}
 	
@@ -78,8 +78,7 @@
 		kAudioObjectPropertyElementMaster
 	};
 	
-	AudioObjectPropertyListenerBlock b = ^(UInt32 inNumberAddresses,
-						const AudioObjectPropertyAddress *inAddresses)
+	AudioObjectPropertyListenerBlock b = ^(UInt32 inNumberAddresses, const AudioObjectPropertyAddress *inAddresses)
 	{
 		// triggered when a datasource changes
 		
@@ -94,14 +93,13 @@
 			// Recognized as headphones
 			NSLog(@"headphones?");
 		}
-
+		
 		// TODO: post NSNotification?
 		
 	};
 	
 	
-	OSStatus ret = AudioObjectAddPropertyListenerBlock([self device], &addr,
-													   dispatch_get_main_queue(), b);
+	OSStatus ret = AudioObjectAddPropertyListenerBlock([self device], &addr, dispatch_get_main_queue(), b);
 	if (ret)
 	{
 		abort(); // FIXME
@@ -124,7 +122,7 @@
 		NSLog(@"%s kAudioObjectPropertyName ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return NULL;
 	}
-
+	
 	return (__bridge NSString *)deviceName;
 }
 
@@ -156,7 +154,7 @@
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
 	};
-
+	
 	
 	UInt32 tt;
 	UInt32 propSize = sizeof(UInt32);
@@ -166,7 +164,7 @@
 		NSLog(@"%s kAudioDevicePropertyTransportType ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return 0;
 	}
-
+	
 	return tt;
 }
 +(NSString *)transportTypeAsName:(UInt32)transportType
@@ -208,20 +206,23 @@
 		return 0;
 	}
 	
-	AudioBufferList *tmp = calloc(size, sizeof(AudioBufferList *));
-	UInt32 tmpSize = size * sizeof(AudioBufferList *);
-		
+	AudioBufferList *tmp = calloc(size, sizeof(AudioBufferList));
+	UInt32 tmpSize = size * sizeof(AudioBufferList);
+	
+	UInt32 outputChannelCount = 0;
+	
 	ret = AudioObjectGetPropertyData([self device], &addr, 0, NULL, &tmpSize, tmp);
 	if (ret)
 	{
 		NSLog(@"%s kAudioDevicePropertyStreamConfiguration ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
-		return 0;
+		goto out;
 	}
 	
-	UInt32 outputChannelCount = 0;
 	for(int j = 0 ; j<tmp->mNumberBuffers ; j++)
 		outputChannelCount += tmp->mBuffers[j].mNumberChannels;
 	
+	out:
+	free(tmp);
 	return outputChannelCount;
 }
 
@@ -255,7 +256,7 @@
 	};
 	
 	// could use AudioObjectHasProperty instead
-
+	
 	UInt32 size = 0;
 	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
 	if (ret == kAudioHardwareUnknownPropertyError)
@@ -263,7 +264,7 @@
 		// this just means the device doesn't support datasources, but it has one nonetheless
 		return 1;
 	}
-		
+	
 	// any other error
 	if (ret)
 	{
@@ -301,9 +302,9 @@
 	{
 		// this just means the device doesn't support datasources, but it has one nonetheless
 		[arr addObject:[[PriAudioDataSource alloc] initWithDevice:self]];
-		return arr;
+		goto out;
 	}
-
+	
 	// any other error
 	if (ret)
 	{

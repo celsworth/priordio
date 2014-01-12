@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83510E9A188036B80022BE1F"
-               BuildableName = "Default Audio SwitcherTests.xctest"
-               BlueprintName = "Default Audio SwitcherTests"
-               ReferencedContainer = "container:Priordio.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

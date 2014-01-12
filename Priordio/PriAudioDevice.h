@@ -21,10 +21,14 @@ enum {
 @interface PriAudioDevice : NSObject {
 }
 
-// array of AudioOutput
+// array of AudioOutputs
 @property (nonatomic, retain) NSArray *dataSources;
 
 @property (nonatomic, assign) AudioDeviceID device;
+
+// saved to persistent storage so we remember between runs
+//@property (nonatomic, retain) NSString *uid;
+
 
 -(id)initWithDefaultDevice;
 -(id)initWithDevice:(AudioDeviceID)device;

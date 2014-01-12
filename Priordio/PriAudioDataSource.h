@@ -20,7 +20,7 @@
 
 @property (nonatomic, assign) UInt32 dataSource;
 
-// need to decide which of these will be saved to persistant storage
+
 
 //@property (nonatomic, retain) NSString *dataSourceName;
 
