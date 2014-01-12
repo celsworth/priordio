@@ -19,22 +19,22 @@
 {
 	// Insert code here to initialize your application
 	
-	self.audioSystem = [PriAudioSystem new];
+	[self setAudioSystem:[PriAudioSystem new]];
 	
-	[self.audioSystem setupDevicesNotification];
-	[self.audioSystem setupDefaultChangeNotification];
+	[[self audioSystem] setupDevicesNotification];
+	[[self audioSystem] setupDefaultChangeNotification];
 	
 	// outputList initialised in nib, we need to tell it about the audioSystem we've allocated
 	// so it can watch for notifications, enumerate lists, etc.
-	[self.outputList setAudioSystem:self.audioSystem];
+	[[self outputList] setAudioSystem:[self audioSystem]];
 	
 	// probably want to pass this to outputList so it can handle its own table?
-	[self.outputList setOutputListTableView:self.outputListTableView];
+	[[self outputList] setOutputListTableView:[self outputListTableView]];
 	
-	[self.outputList reload];
+	[[self outputList] reload];
 	
 	// debugging..
-	NSLog(@"%@", [self.audioSystem devices]);
+	NSLog(@"%@", [[self audioSystem] devices]);
 	
 	// debugging..
 	PriAudioDevice *defaultDevice = [[PriAudioDevice alloc] initWithDefaultDevice];

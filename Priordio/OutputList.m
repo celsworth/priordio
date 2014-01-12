@@ -37,7 +37,7 @@
 	
 	NSMutableArray *tmp = [NSMutableArray new];
 	
-	[[self.audioSystem devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
+	[[[self audioSystem] devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
 		
 		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
 			// temporary..
@@ -46,9 +46,9 @@
 		
 	}];
 	
-	self.outputs = tmp;
+	[self setOutputs:tmp];
 	
-	[self.outputListTableView reloadData];
+	[[self outputListTableView] reloadData];
 }
 
 
@@ -61,16 +61,16 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn
 			row:(NSInteger)rowIndex
 {
-	PriOutput *output = self.outputs[rowIndex];
+	PriOutput *output = [self outputs][rowIndex];
 	
 	// temporary..
 	if ([[aTableColumn identifier] isEqualToString:@"device"])
 	{
-		PriAudioDataSource *dev = self.outputs[rowIndex];
+		PriAudioDataSource *dev = [self outputs][rowIndex];
 		return [[dev device] name];
 	}
 	
-	return [self.outputs[rowIndex] name];
+	return [[self outputs][rowIndex] name];
 }
 
 

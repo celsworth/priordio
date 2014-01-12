@@ -51,7 +51,7 @@
 
 -(AudioDeviceID)deviceID
 {
-	return _device;
+	return [self device];
 }
 
 +(AudioDeviceID)defaultAudioDevice
@@ -100,7 +100,7 @@
 	};
 	
 	
-	OSStatus ret = AudioObjectAddPropertyListenerBlock(_device, &addr,
+	OSStatus ret = AudioObjectAddPropertyListenerBlock([self device], &addr,
 													   dispatch_get_main_queue(), b);
 	if (ret)
 	{
@@ -118,7 +118,7 @@
 	
 	CFStringRef deviceName;
 	UInt32 propSize = sizeof(CFStringRef);
-	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &deviceName);
+	OSStatus ret = AudioObjectGetPropertyData([self device], &addr, 0, NULL, &propSize, &deviceName);
 	if (ret)
 	{
 		NSLog(@"%s kAudioObjectPropertyName ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
@@ -138,7 +138,7 @@
 	
 	CFStringRef uid;
 	UInt32 propSize = sizeof(CFStringRef);
-	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &uid);
+	OSStatus ret = AudioObjectGetPropertyData([self device], &addr, 0, NULL, &propSize, &uid);
 	if (ret)
 	{
 		NSLog(@"%s kAudioDevicePropertyDeviceUID ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
@@ -201,7 +201,7 @@
 	};
 	
 	UInt32 size = 0;
-	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
+	OSStatus ret = AudioObjectGetPropertyDataSize([self device], &addr, 0, NULL, &size);
 	if (ret)
 	{
 		NSLog(@"%s kAudioDevicePropertyStreamConfiguration/size ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
@@ -211,7 +211,7 @@
 	AudioBufferList *tmp = calloc(size, sizeof(AudioBufferList *));
 	UInt32 tmpSize = size * sizeof(AudioBufferList *);
 		
-	ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &tmpSize, tmp);
+	ret = AudioObjectGetPropertyData([self device], &addr, 0, NULL, &tmpSize, tmp);
 	if (ret)
 	{
 		NSLog(@"%s kAudioDevicePropertyStreamConfiguration ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
@@ -236,7 +236,7 @@
 	UInt32 dataSourceId = 0;
 	UInt32 dataSourceIdSize = sizeof(UInt32);
 	
-	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL,
+	OSStatus ret = AudioObjectGetPropertyData([self device], &addr, 0, NULL,
 											  &dataSourceIdSize, &dataSourceId);
 	if (ret)
 	{
@@ -296,7 +296,7 @@
 	
 	// could use AudioObjectHasProperty instead
 	
-	OSStatus ret = AudioObjectGetPropertyData(_device, &tmpAddr, 0, NULL, &tmpSize, tmp);
+	OSStatus ret = AudioObjectGetPropertyData([self device], &tmpAddr, 0, NULL, &tmpSize, tmp);
 	if (ret == kAudioHardwareUnknownPropertyError)
 	{
 		// this just means the device doesn't support datasources, but it has one nonetheless

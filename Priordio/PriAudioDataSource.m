@@ -60,7 +60,7 @@
 	
 	UInt32 avtSize = sizeof(avt);
 	
-	OSStatus ret = AudioObjectGetPropertyData([_device deviceID], &addr, 0, NULL, &avtSize, &avt);
+	OSStatus ret = AudioObjectGetPropertyData([[self device] deviceID], &addr, 0, NULL, &avtSize, &avt);
 	if (ret)
 	{
 		// AudioObjectGetPropertyData failure
@@ -82,7 +82,7 @@
 		kAudioObjectPropertyElementMaster
 	};
 
-	AudioDeviceID deviceID = [_device deviceID];
+	AudioDeviceID deviceID = [[self device] deviceID];
 	
 	OSStatus ret;
 	ret = AudioObjectSetPropertyData(kAudioObjectSystemObject, &tmpAddr, 0, NULL,
@@ -95,7 +95,7 @@
 	tmpAddr.mSelector = kAudioDevicePropertyDataSource;
 	tmpAddr.mScope = kAudioDevicePropertyScopeOutput;
 	ret = AudioObjectSetPropertyData(deviceID, &tmpAddr, 0, NULL,
-									 sizeof(UInt32), &_dataSource);
+									 sizeof(UInt32), &[self dataSource]);
 	if (ret)
 	{
 		abort(); // FIXME
