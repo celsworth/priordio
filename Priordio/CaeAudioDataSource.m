@@ -41,7 +41,8 @@
 	// nil dataSource means we're not "real", we're a made up source because the device
 	// reported it didn't support multiple dataSources
 	if (!_dataSource)
-		return @"default";
+		// so just report the device name for now
+		return [_device name];
 	
 	AudioObjectPropertyAddress addr = {
 		kAudioDevicePropertyDataSourceNameForIDCFString,

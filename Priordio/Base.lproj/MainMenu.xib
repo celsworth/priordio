@@ -697,8 +697,8 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <outlet property="dataSource" destination="494" id="Hs9-2b-IQE"/>
-                                        <outlet property="delegate" destination="494" id="RWG-6J-f5f"/>
+                                        <outlet property="dataSource" destination="gv5-EX-doL" id="b92-F9-Geb"/>
+                                        <outlet property="delegate" destination="gv5-EX-doL" id="ufJ-bA-bo7"/>
                                     </connections>
                                 </tableView>
                             </subviews>
@@ -728,10 +728,12 @@
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
-                <outlet property="deviceListTableView" destination="JwB-mR-d5L" id="Qh0-WT-ODK"/>
+                <outlet property="outputList" destination="gv5-EX-doL" id="TBt-jU-sab"/>
+                <outlet property="outputListTableView" destination="JwB-mR-d5L" id="Vht-nn-mdr"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
+        <customObject id="gv5-EX-doL" customClass="OutputList"/>
     </objects>
 </document>

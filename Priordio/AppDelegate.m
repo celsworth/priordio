@@ -24,9 +24,19 @@
 	[self.audioSystem setupDevicesNotification];
 	[self.audioSystem setupDefaultChangeNotification];
 	
+	// outputList initialised in nib, we need to tell it about the audioSystem we've allocated
+	// so it can watch for notifications, enumerate lists, etc.
+	[self.outputList setAudioSystem:self.audioSystem];
+	
+	// probably want to pass this to outputList so it can handle its own table?
+	[self.outputList setOutputListTableView:self.outputListTableView];
+	
+	[self.outputList reload];
+	
+	// debugging..
 	NSLog(@"%@", [self.audioSystem devices]);
 	
-	
+	// debugging..
 	CaeAudioDevice *defaultDevice = [[CaeAudioDevice alloc] initWithDefaultDevice];
 	
 	NSArray *dataSources = [defaultDevice dataSources];
@@ -37,26 +47,6 @@
 	[dataSources enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSLog(@"datasource is %@", [obj name]);
 	}];
-	
-	[self.deviceListTableView reloadData];
-}
-
-
-// testing tableview stuff
--(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
-{
-	return [[self.audioSystem devices] count];
-}
-
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn
-			row:(NSInteger)rowIndex
-{
-	CaeAudioDevice *dev = [self.audioSystem devices][rowIndex];
-	
-	if ([[aTableColumn identifier] isEqualToString:@"device"])
-		return [dev name];
-	else
-		return [[[dev dataSources] lastObject] name];
 }
 
 @end

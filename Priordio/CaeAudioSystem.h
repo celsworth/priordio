@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CaeAudioDevice.h"
+
 @interface CaeAudioSystem : NSObject
 
 @property (nonatomic, retain) NSArray *devices;
