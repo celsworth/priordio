@@ -1,6 +1,6 @@
 //
 //  PriAudioDataSource.m
-//  Default Audio Switcher
+//  Priordio
 //
 //  Created by Chris Elsworth on 10/01/2014.
 //  Copyright (c) 2014 Chris Elsworth. All rights reserved.
@@ -92,10 +92,11 @@
 		abort(); // FIXME
 	}
 	
+	UInt32 ds = [self dataSource];
+	
 	tmpAddr.mSelector = kAudioDevicePropertyDataSource;
 	tmpAddr.mScope = kAudioDevicePropertyScopeOutput;
-	ret = AudioObjectSetPropertyData(deviceID, &tmpAddr, 0, NULL,
-									 sizeof(UInt32), &[self dataSource]);
+	ret = AudioObjectSetPropertyData(deviceID, &tmpAddr, 0, NULL, sizeof(UInt32), &ds);
 	if (ret)
 	{
 		abort(); // FIXME

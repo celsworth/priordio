@@ -1,6 +1,6 @@
 //
 //  PriAudioDataSource.h
-//  Default Audio Switcher
+//  Priordio
 //
 //  Created by Chris Elsworth on 10/01/2014.
 //  Copyright (c) 2014 Chris Elsworth. All rights reserved.

@@ -40,7 +40,6 @@
 	[[[self audioSystem] devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
 		
 		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
-			// temporary..
 			[tmp addObject:dataSource];
 		}];
 		
@@ -52,25 +51,26 @@
 }
 
 
-// testing tableview stuff
+#pragma mark - NSTableView DataSource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return [self.outputs count];
+	return [[self outputs] count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn
 			row:(NSInteger)rowIndex
 {
-	PriOutput *output = [self outputs][rowIndex];
+	//PriOutput *output = [self outputs][rowIndex];
 	
-	// temporary..
-	if ([[aTableColumn identifier] isEqualToString:@"device"])
+	PriAudioDataSource *ds = [self outputs][rowIndex];
+
+	if ([[aTableColumn identifier] isEqualToString:@"name"])
 	{
-		PriAudioDataSource *dev = [self outputs][rowIndex];
-		return [[dev device] name];
+		return [ds name];
 	}
 	
-	return [[self outputs][rowIndex] name];
+	// type
+	return [PriAudioDevice transportTypeAsName:[[ds device] transportType]];
 }
 
 
