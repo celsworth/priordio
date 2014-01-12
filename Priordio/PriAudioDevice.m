@@ -1,21 +1,21 @@
 //
-//  CaeAudioDevice.m
+//  PriAudioDevice.m
 //  Default Audio Switcher
 //
 //  Created by Chris Elsworth on 10/01/2014.
 //  Copyright (c) 2014 Chris Elsworth. All rights reserved.
 //
 
-#import "CaeAudioDevice.h"
+#import "PriAudioDevice.h"
 
-#import "CaeAudioSystem.h"
-#import "CaeAudioDataSource.h"
+#import "PriAudioSystem.h"
+#import "PriAudioDataSource.h"
 
-@implementation CaeAudioDevice
+@implementation PriAudioDevice
 
 -(id)initWithDevice:(AudioDeviceID)device
 {
-	//NSLog(@"init CaeAudioDevice with device=%d", device);
+	//NSLog(@"init PriAudioDevice with device=%d", device);
 	
 	if (self = [super init])
 	{
@@ -33,7 +33,7 @@
 
 -(id)initWithDefaultDevice
 {
-	if (self = [self initWithDevice:[CaeAudioDevice defaultAudioDevice]])
+	if (self = [self initWithDevice:[PriAudioDevice defaultAudioDevice]])
 	{
 		NSLog(@"setup for default %@ done", [self name]);
 	}
@@ -44,7 +44,7 @@
 -(NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ %@ %@ (%d output channels) (%@)",
-			[self name], [self uid], [CaeAudioDevice transportTypeAsName:[self transportType]],
+			[self name], [self uid], [PriAudioDevice transportTypeAsName:[self transportType]],
 			[self outputChannelCount],
 			[[self dataSources] componentsJoinedByString:@", "]];
 }
@@ -121,7 +121,7 @@
 	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &deviceName);
 	if (ret)
 	{
-		NSLog(@"%s kAudioObjectPropertyName ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		NSLog(@"%s kAudioObjectPropertyName ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return NULL;
 	}
 
@@ -141,7 +141,7 @@
 	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &uid);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDeviceUID ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		NSLog(@"%s kAudioDevicePropertyDeviceUID ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return NULL;
 	}
 	
@@ -163,7 +163,7 @@
 	OSStatus ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &propSize, &tt);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyTransportType ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		NSLog(@"%s kAudioDevicePropertyTransportType ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return 0;
 	}
 
@@ -204,7 +204,7 @@
 	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyStreamConfiguration/size ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		NSLog(@"%s kAudioDevicePropertyStreamConfiguration/size ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return 0;
 	}
 	
@@ -214,7 +214,7 @@
 	ret = AudioObjectGetPropertyData(_device, &addr, 0, NULL, &tmpSize, tmp);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyStreamConfiguration ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		NSLog(@"%s kAudioDevicePropertyStreamConfiguration ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return 0;
 	}
 	
@@ -240,7 +240,7 @@
 											  &dataSourceIdSize, &dataSourceId);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return 0;
 	}
 	return dataSourceId;
@@ -268,7 +268,7 @@
 	if (ret)
 	{
 		NSLog(@"%s %@ kAudioDevicePropertyDataSources/size ret=%@",
-			  __PRETTY_FUNCTION__, self, [CaeAudioSystem osError:ret]);
+			  __PRETTY_FUNCTION__, self, [PriAudioSystem osError:ret]);
 		return 0;
 	}
 	
@@ -300,21 +300,21 @@
 	if (ret == kAudioHardwareUnknownPropertyError)
 	{
 		// this just means the device doesn't support datasources, but it has one nonetheless
-		[arr addObject:[[CaeAudioDataSource alloc] initWithDevice:self]];
+		[arr addObject:[[PriAudioDataSource alloc] initWithDevice:self]];
 		return arr;
 	}
 
 	// any other error
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [CaeAudioSystem osError:ret]);
+		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		goto out;
 	}
 	
 	for (int i = 0; i < count; i++) {
 		if (tmp[i] == 0) continue;
 		
-		CaeAudioDataSource *addObj = [[CaeAudioDataSource alloc] initWithDevice:self
+		PriAudioDataSource *addObj = [[PriAudioDataSource alloc] initWithDevice:self
 																	 dataSource:tmp[i]];
 		[arr addObject:addObj];
 	}

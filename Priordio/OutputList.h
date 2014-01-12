@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CaeAudioSystem.h"
+#import "PriAudioSystem.h"
 
 @interface OutputList : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (nonatomic, retain) NSMutableArray *outputs;
-@property (nonatomic, retain) CaeAudioSystem *audioSystem;
+@property (nonatomic, retain) PriAudioSystem *audioSystem;
 @property (nonatomic, retain) NSTableView *outputListTableView;
 
 

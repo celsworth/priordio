@@ -10,7 +10,7 @@
 
 #import "CoreAudio/CoreAudio.h"
 
-#import "CaeAudioDevice.h"
+#import "PriAudioDevice.h"
 
 @implementation AppDelegate
 
@@ -19,7 +19,7 @@
 {
 	// Insert code here to initialize your application
 	
-	self.audioSystem = [CaeAudioSystem new];
+	self.audioSystem = [PriAudioSystem new];
 	
 	[self.audioSystem setupDevicesNotification];
 	[self.audioSystem setupDefaultChangeNotification];
@@ -37,7 +37,7 @@
 	NSLog(@"%@", [self.audioSystem devices]);
 	
 	// debugging..
-	CaeAudioDevice *defaultDevice = [[CaeAudioDevice alloc] initWithDefaultDevice];
+	PriAudioDevice *defaultDevice = [[PriAudioDevice alloc] initWithDefaultDevice];
 	
 	NSArray *dataSources = [defaultDevice dataSources];
 	

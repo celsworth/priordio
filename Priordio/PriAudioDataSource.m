@@ -1,5 +1,5 @@
 //
-//  CaeAudioDataSource.m
+//  PriAudioDataSource.m
 //  Default Audio Switcher
 //
 //  Created by Chris Elsworth on 10/01/2014.
@@ -9,11 +9,11 @@
 // a simple container for details about an audio output
 // (a dataSource on a device)
 
-#import "CaeAudioDataSource.h"
+#import "PriAudioDataSource.h"
 
-@implementation CaeAudioDataSource
+@implementation PriAudioDataSource
 
--(id)initWithDevice:(CaeAudioDevice *)device dataSource:(UInt32)dataSource;
+-(id)initWithDevice:(PriAudioDevice *)device dataSource:(UInt32)dataSource;
 {
 	if (self = [super init])
 	{
@@ -22,7 +22,7 @@
 	}
 	return self;
 }
--(id)initWithDevice:(CaeAudioDevice *)device;
+-(id)initWithDevice:(PriAudioDevice *)device;
 {
 	if (self = [super init])
 	{

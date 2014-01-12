@@ -10,10 +10,10 @@
 
 #import "PriOutput.h"
 
-#import "CaeAudioDataSource.h"
+#import "PriAudioDataSource.h"
 /*
  each row in our priorities table is a PriOutput
- which is actually a CaeAudioDevice+CaeAudioDataSource combination.
+ which is actually a PriAudioDevice+PriAudioDataSource combination.
  
  and if an AudioDevice has more than one DataSource (AirPlay, generally?)
  it may appear more than once with different targets to choose.
@@ -37,9 +37,9 @@
 	
 	NSMutableArray *tmp = [NSMutableArray new];
 	
-	[[self.audioSystem devices] enumerateObjectsUsingBlock:^(CaeAudioDevice *device, NSUInteger idx, BOOL *stop) {
+	[[self.audioSystem devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
 		
-		[[device dataSources] enumerateObjectsUsingBlock:^(CaeAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
+		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
 			// temporary..
 			[tmp addObject:dataSource];
 		}];
@@ -66,7 +66,7 @@
 	// temporary..
 	if ([[aTableColumn identifier] isEqualToString:@"device"])
 	{
-		CaeAudioDataSource *dev = self.outputs[rowIndex];
+		PriAudioDataSource *dev = self.outputs[rowIndex];
 		return [[dev device] name];
 	}
 	

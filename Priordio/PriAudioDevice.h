@@ -1,5 +1,5 @@
 //
-//  CaeAudioDevice.h
+//  PriAudioDevice.h
 //  Default Audio Switcher
 //
 //  Created by Chris Elsworth on 10/01/2014.
@@ -18,7 +18,7 @@ enum {
 };
 
 
-@interface CaeAudioDevice : NSObject {
+@interface PriAudioDevice : NSObject {
 }
 
 // array of AudioOutput

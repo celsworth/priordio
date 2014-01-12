@@ -10,13 +10,13 @@
 
 #import "CoreAudio/CoreAudio.h"
 
-#import "CaeAudioDevice.h"
+#import "PriAudioDevice.h"
 
-@interface CaeAudioDataSource : NSObject {
+@interface PriAudioDataSource : NSObject {
 }
 
 // the audio device this output belongs to
-@property (nonatomic, retain) CaeAudioDevice *device;
+@property (nonatomic, retain) PriAudioDevice *device;
 
 @property (nonatomic, assign) UInt32 dataSource;
 
@@ -24,8 +24,8 @@
 
 //@property (nonatomic, retain) NSString *dataSourceName;
 
--(id)initWithDevice:(CaeAudioDevice *)device dataSource:(UInt32)dataSource;
--(id)initWithDevice:(CaeAudioDevice *)device;
+-(id)initWithDevice:(PriAudioDevice *)device dataSource:(UInt32)dataSource;
+-(id)initWithDevice:(PriAudioDevice *)device;
 
 -(NSString *)name;
 

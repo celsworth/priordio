@@ -1,23 +1,23 @@
 //
-//  CaeAudioSystem.m
+//  PriAudioSystem.m
 //  Default Audio Switcher
 //
 //  Created by Chris Elsworth on 10/01/2014.
 //  Copyright (c) 2014 Chris Elsworth. All rights reserved.
 //
 
-#import "CaeAudioSystem.h"
+#import "PriAudioSystem.h"
 
 #import "CoreAudio/CoreAudio.h"
 
 
-@implementation CaeAudioSystem
+@implementation PriAudioSystem
 
 -(id)init
 {
 	if (self = [super init])
 	{
-		_devices = [CaeAudioSystem enumerateDevices];
+		_devices = [PriAudioSystem enumerateDevices];
 	}
 	return self;
 }
@@ -92,7 +92,7 @@
 	// and convert to a more useful form
 	for (UInt32 i = 0; i < numDevices; i++)
 	{
-		CaeAudioDevice *dev = [[CaeAudioDevice alloc] initWithDevice:deviceList[i]];
+		PriAudioDevice *dev = [[PriAudioDevice alloc] initWithDevice:deviceList[i]];
 		
 		// only add devices with some output channels (this gets rid of the internal mic etc)
 		if ([dev outputChannelCount] > 0)

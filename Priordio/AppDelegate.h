@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "CaeAudioSystem.h"
+#import "PriAudioSystem.h"
 #import "OutputList.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource>
@@ -16,7 +16,7 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (nonatomic, weak) IBOutlet OutputList *outputList;
 
-@property (nonatomic, retain) CaeAudioSystem *audioSystem;
+@property (nonatomic, retain) PriAudioSystem *audioSystem;
 
 
 @property (nonatomic, weak) IBOutlet NSTableView *outputListTableView;

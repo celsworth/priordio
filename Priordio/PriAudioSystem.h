@@ -1,5 +1,5 @@
 //
-//  CaeAudioSystem.h
+//  PriAudioSystem.h
 //  Default Audio Switcher
 //
 //  Created by Chris Elsworth on 10/01/2014.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CaeAudioDevice.h"
+#import "PriAudioDevice.h"
 
-@interface CaeAudioSystem : NSObject
+@interface PriAudioSystem : NSObject
 
 @property (nonatomic, retain) NSArray *devices;
 
