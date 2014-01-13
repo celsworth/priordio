@@ -8,7 +8,7 @@
 
 #import "OutputList.h"
 
-//#import "PriOutput.h" // might use this soon..
+#import "PriOutput.h"
 
 /*
  each row in our priorities table is a PriOutput
@@ -16,8 +16,6 @@
  
  and if an AudioDevice has more than one DataSource (AirPlay, generally?)
  it may appear more than once with different targets to choose.
- 
- (well, that was the plan, not sure now, maybe just use DataSource?)
  */
 
 @implementation OutputList
@@ -32,21 +30,29 @@
 	return self;
 }
 
--(void)reload
+-(void)enumerateAudioSystem
 {
-	// refresh our outputs array from current audioSystem data
-	
-	NSMutableArray *tmp = [NSMutableArray new];
+	// to be run on first app start? then save it and use it thereafter
+	NSMutableArray *arr = [NSMutableArray new];
 	
 	[[[self audioSystem] devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
 		
 		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
-			[tmp addObject:dataSource];
+			// create a PriOutput for this
+			PriOutput *entry = [[PriOutput alloc] initWithAudioSystem:[self audioSystem]];
+			[entry setDeviceUID:[device uid]];
+			[entry setDataSourceName:[dataSource name]];
+			
+			[arr addObject:entry];
 		}];
 		
 	}];
 	
-	[self setOutputs:tmp];
+	[self setOutputs:arr];
+}
+
+-(void)reload
+{
 	
 	[[self outputListTableView] reloadData];
 }
@@ -61,16 +67,18 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn
 			row:(NSInteger)rowIndex
 {
-	//PriOutput *output = [self outputs][rowIndex];
+	PriOutput *output = [self outputs][rowIndex];
 	
-	PriAudioDataSource *ds = [self outputs][rowIndex];
-
+	PriAudioDataSource *ds = [[self audioSystem] findDevice:[output deviceUID] dataSource:[output dataSourceName]];
+	
+	// FIXME: ds can be nil if its a disconnected device! handle it (greyed out display?)
+	
 	if ([[aTableColumn identifier] isEqualToString:@"name"])
 	{
-		return [ds name];
+		return [output name];
 	}
 	
-	// type
+	// type, we need to store this in the Output for when ds is nil?
 	return [PriAudioDevice transportTypeAsName:[[ds device] transportType]];
 }
 

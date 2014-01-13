@@ -31,6 +31,7 @@
 	// probably want to pass this to outputList so it can handle its own table?
 	[[self outputList] setOutputListTableView:[self outputListTableView]];
 	
+	[[self outputList] enumerateAudioSystem];
 	[[self outputList] reload];
 	
 	// debugging..

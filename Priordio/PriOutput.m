@@ -22,12 +22,13 @@
 
 -(NSString *)name
 {
-	return @"test";
+	return [self dataSourceName];
 }
 
 -(BOOL)isPresent
 {
 	// is this device/dataSource combination currently present in audioSystem?
+	// this might not belong in this class, we probably don't want to pass in audioSystem at all either
 	
 	PriAudioDataSource *ds = [[self audioSystem] findDevice:[self deviceUID] dataSource:[self dataSourceName]];
 	
