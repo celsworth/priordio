@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CoreAudio/CoreAudio.h"
+
 #import "PriAudioDevice.h"
 
+@class PriAudioDevice; // err not sure why we need this when we have the #import above, investigate
 @interface PriAudioSystem : NSObject
 
 @property (nonatomic, retain) NSArray *devices;
@@ -20,5 +23,8 @@
 
 -(void)setupDevicesNotification;
 -(void)setupDefaultChangeNotification;
+
+-(PriAudioDevice *)findDevice:(NSString *)deviceUID;
+-(PriAudioDataSource *)findDevice:(NSString *)deviceUID dataSource:(NSString *)dataSourceName;
 
 @end

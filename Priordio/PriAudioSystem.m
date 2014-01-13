@@ -8,8 +8,6 @@
 
 #import "PriAudioSystem.h"
 
-#import "CoreAudio/CoreAudio.h"
-
 
 @implementation PriAudioSystem
 
@@ -80,7 +78,7 @@
 	// allocate space for those devices
 	UInt32 numDevices = propSize / sizeof(AudioDeviceID);
 	AudioDeviceID *deviceList = (AudioDeviceID *)calloc(numDevices, sizeof(AudioDeviceID));
-		
+	
 	// fetch device info
 	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &propSize, deviceList);
 	if (ret)
@@ -157,8 +155,50 @@
 													   dispatch_get_main_queue(), b);
 	
 	
-
 	
 }
+
+-(PriAudioDevice *)findDevice:(NSString *)deviceUID
+{
+	// look for deviceUID in our current list of known objects
+	
+	// allow ret to be set inside blocks
+	__block PriAudioDevice *ret = NULL;
+	
+	[[self devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
+		
+		if ([[device uid] isEqualToString:deviceUID])
+		{
+			ret = device;
+			*stop = YES;
+		}
+	}];
+	
+	return ret;
+}
+
+
+-(PriAudioDataSource *)findDevice:(NSString *)deviceUID dataSource:(NSString *)dataSourceName
+{
+	// look for deviceUID and dataSourceName in our current list of known objects
+	
+	// allow ret to be set inside blocks
+	__block PriAudioDataSource *ret = NULL;
+	
+	PriAudioDevice *device = [self findDevice:deviceUID];
+	if (device)
+	{
+		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
+			if ([[dataSource name] isEqualToString:dataSourceName])
+			{
+				ret = dataSource;
+				*stop = YES;
+			}
+		}];
+	}
+	
+	return ret;
+}
+
 
 @end
