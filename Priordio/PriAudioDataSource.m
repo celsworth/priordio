@@ -74,6 +74,11 @@
 	return (__bridge NSString *)theAnswer;
 }
 
+-(BOOL)isDefault
+{
+	return [[self device] deviceID] == [PriAudioDevice defaultAudioDevice];
+}
+
 // untested, just guessing based on
 // http://joris.kluivers.nl/blog/2012/07/25/per-application-airplay-in-mountain-lion/
 -(void)setAsDefault

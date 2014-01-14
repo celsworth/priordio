@@ -12,7 +12,11 @@
 
 @interface OutputListCell : NSTableCellView
 
-@property (nonatomic, weak) IBOutlet NSTextField *testTextField;
+@property (nonatomic, weak) IBOutlet NSImageView *connectedImage;
+@property (nonatomic, weak) IBOutlet NSTextField *titleTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *connectedTextField;
+
+@property (nonatomic, weak) IBOutlet NSImageView *transportTypeImage;
 
 @property (nonatomic, retain) PriOutput *output;
 

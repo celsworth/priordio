@@ -28,4 +28,7 @@
 
 -(NSString *)name;
 
+-(BOOL)isDefault;
+-(void)setAsDefault;
+
 @end

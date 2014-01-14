@@ -36,6 +36,8 @@ enum {
 
 -(AudioDeviceID)deviceID;
 
++(AudioDeviceID)defaultAudioDevice;
+
 -(NSString *)name;
 -(NSString *)uid;
 -(UInt32)transportType;

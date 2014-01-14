@@ -10,7 +10,6 @@
 
 @interface PriOutput ()
 // private properties
-@property (nonatomic, retain) PriAudioDataSource *dataSource;
 @end
 
 @implementation PriOutput
