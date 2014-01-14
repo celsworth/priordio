@@ -17,12 +17,16 @@
 @property (nonatomic, retain) PriAudioSystem *audioSystem;
 
 
+
+// persistent data
+
 // identifying properties used to lookup current devices
 @property (nonatomic, retain) NSString *deviceUID;
 @property (nonatomic, retain) NSString *dataSourceName;
 
 // used for table display? if nil, use [datasource Name] ?
 @property (nonatomic, retain) NSString *friendlyName;
+
 
 -(id)initWithAudioSystem:(PriAudioSystem *)audioSystem;
 

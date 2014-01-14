@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8312F4221881FF3100F3BD0C /* OutputList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F4211881FF3100F3BD0C /* OutputList.m */; };
 		8312F4251882026300F3BD0C /* PriOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F4241882026300F3BD0C /* PriOutput.m */; };
+		8312F4281885010F00F3BD0C /* OutputListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F4271885010F00F3BD0C /* OutputListCell.m */; };
 		83510E7E188036B80022BE1F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83510E7D188036B80022BE1F /* Cocoa.framework */; };
 		83510E88188036B80022BE1F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83510E86188036B80022BE1F /* InfoPlist.strings */; };
 		83510E8A188036B80022BE1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510E89188036B80022BE1F /* main.m */; };
@@ -29,6 +30,8 @@
 		8312F4211881FF3100F3BD0C /* OutputList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OutputList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8312F4231882026300F3BD0C /* PriOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriOutput.h; sourceTree = "<group>"; };
 		8312F4241882026300F3BD0C /* PriOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriOutput.m; sourceTree = "<group>"; };
+		8312F4261885010F00F3BD0C /* OutputListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputListCell.h; sourceTree = "<group>"; };
+		8312F4271885010F00F3BD0C /* OutputListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputListCell.m; sourceTree = "<group>"; };
 		83510E7A188036B80022BE1F /* Priordio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Priordio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83510E7D188036B80022BE1F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		83510E80188036B80022BE1F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -117,6 +120,8 @@
 				83510E92188036B80022BE1F /* MainMenu.xib */,
 				8312F4201881FF3100F3BD0C /* OutputList.h */,
 				8312F4211881FF3100F3BD0C /* OutputList.m */,
+				8312F4261885010F00F3BD0C /* OutputListCell.h */,
+				8312F4271885010F00F3BD0C /* OutputListCell.m */,
 				8312F4231882026300F3BD0C /* PriOutput.h */,
 				8312F4241882026300F3BD0C /* PriOutput.m */,
 				83510E84188036B80022BE1F /* Supporting Files */,
@@ -165,7 +170,7 @@
 			dependencies = (
 			);
 			name = Priordio;
-			productName = "Priordio";
+			productName = Priordio;
 			productReference = 83510E7A188036B80022BE1F /* Priordio.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -216,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8312F4281885010F00F3BD0C /* OutputListCell.m in Sources */,
 				8312F4221881FF3100F3BD0C /* OutputList.m in Sources */,
 				83510E91188036B80022BE1F /* AppDelegate.m in Sources */,
 				83510EB918805CF40022BE1F /* PriAudioDataSource.m in Sources */,

@@ -9,6 +9,7 @@
 #import "OutputList.h"
 
 #import "PriOutput.h"
+#import "OutputListCell.h"
 
 /*
  each row in our priorities table is a PriOutput
@@ -32,7 +33,7 @@
 
 -(void)enumerateAudioSystem
 {
-	// to be run on first app start? then save it and use it thereafter
+	// to be run on first app start? then save array and use it thereafter
 	NSMutableArray *arr = [NSMutableArray new];
 	
 	[[[self audioSystem] devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
@@ -53,7 +54,6 @@
 
 -(void)reload
 {
-	
 	[[self outputListTableView] reloadData];
 }
 
@@ -64,23 +64,15 @@
 	return [[self outputs] count];
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn
-			row:(NSInteger)rowIndex
+-(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	PriOutput *output = [self outputs][rowIndex];
+	OutputListCell *cell = [tableView makeViewWithIdentifier:@"entry" owner:self];
 	
-	PriAudioDataSource *ds = [[self audioSystem] findDevice:[output deviceUID] dataSource:[output dataSourceName]];
+	PriOutput *output = [self outputs][row];
 	
-	// FIXME: ds can be nil if its a disconnected device! handle it (greyed out display?)
+	[cell populateFromOutput:output];
 	
-	if ([[aTableColumn identifier] isEqualToString:@"name"])
-	{
-		return [output name];
-	}
-	
-	// type, we need to store this in the Output for when ds is nil?
-	return [PriAudioDevice transportTypeAsName:[[ds device] transportType]];
+	return cell;
 }
-
 
 @end
