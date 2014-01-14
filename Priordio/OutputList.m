@@ -75,4 +75,42 @@
 	return cell;
 }
 
+- (BOOL)tableView:(NSTableView *)tableView shouldReorderColumn:(NSInteger)columnIndex toColumn:(NSInteger)newColumnIndex
+{
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+
+	return YES;
+}
+- (void)tableView:(NSTableView *)tableView didDragTableColumn:(NSTableColumn *)tableColumn
+{
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+
+}
+- (BOOL)tableView:(NSTableView *)aTableView
+	   acceptDrop:(id <NSDraggingInfo>)info
+			  row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+{
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+	return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView *)aTableView
+				validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row
+	   proposedDropOperation:(NSTableViewDropOperation)operation
+{
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+	return NSDragOperationNone;
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+{
+	// doesn't work, maybe play later
+	//NSPasteboardItem *pboardItem = [[NSPasteboardItem alloc] init];
+	//[pboardItem setString:@"test" forType:NSPasteboardTypeString];
+	//[pboard writeObjects:@[pboardItem]];
+	
+	return YES;
+}
+
+
 @end

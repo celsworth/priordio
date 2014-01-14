@@ -62,7 +62,7 @@
 	{
 		[[self connectedImage] setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
 		
-		// can say when it was last seen?
+		// could say when it was last seen?
 		[[self connectedTextField] setStringValue:@"Disconnected"];
 		
 		// remove boldness
