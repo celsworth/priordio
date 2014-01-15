@@ -19,6 +19,4 @@
 @property (nonatomic, retain) PriAudioSystem *audioSystem;
 
 
-@property (nonatomic, weak) IBOutlet NSTableView *outputListTableView;
-
 @end
