@@ -125,7 +125,7 @@
 	{
 		NSLog(@"an audio device was added/removed?");
 		
-		
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPriAudioSystemNotificationDeviceAddedOrRemoved object:self userInfo:nil];
 	};
 	
 	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &addr,
@@ -148,7 +148,7 @@
 	{
 		NSLog(@"default output changed?");
 		
-		
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPriAudioSystemNotificationDeviceDefaultChanged object:self userInfo:nil];
 	};
 	
 	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &addr,

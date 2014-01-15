@@ -12,6 +12,11 @@
 
 #import "PriAudioDevice.h"
 
+
+#define kPriAudioSystemNotificationDeviceAddedOrRemoved @"kPriAudioSystemNotificationDeviceAddedOrRemoved"
+#define kPriAudioSystemNotificationDeviceDefaultChanged @"kPriAudioSystemNotificationDeviceDefaultChanged"
+
+
 @class PriAudioDevice; // err not sure why we need this when we have the #import above, investigate
 @interface PriAudioSystem : NSObject
 

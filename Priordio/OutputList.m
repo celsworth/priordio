@@ -33,8 +33,24 @@
 		_outputs = [NSMutableArray new];
 	}
 	
-	[[self outputListTableView] registerForDraggedTypes:[NSArray arrayWithObject:BasicTableViewDragAndDropDataType]];
+	// this doesn't work yet because the view isn't loaded. not sure where to put it, it's in -reload for now
+	//[[self outputListTableView] registerForDraggedTypes:[NSArray arrayWithObject:BasicTableViewDragAndDropDataType]];
 	
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPriAudioSystemNotificationDeviceDefaultChanged
+													  object:[self audioSystem]
+													   queue:[NSOperationQueue mainQueue]
+												  usingBlock:^(NSNotification *note) {
+													  [self reload];
+												  }];
+
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPriAudioSystemNotificationDeviceAddedOrRemoved
+													  object:[self audioSystem]
+													   queue:[NSOperationQueue mainQueue]
+												  usingBlock:^(NSNotification *note) {
+													  [self reload];
+												  }];
+	
+
 	return self;
 }
 
@@ -46,7 +62,7 @@
 	[[[self audioSystem] devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
 		
 		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
-			// create a PriOutput for this
+			// create a PriOutput for this device/datasource combination
 			PriOutput *entry = [[PriOutput alloc] initWithAudioSystem:[self audioSystem]];
 			[entry setDeviceUID:[device uid]];
 			[entry setDataSourceName:[dataSource name]];
@@ -61,6 +77,7 @@
 
 -(void)reload
 {
+	// a little excessive :)
 	[[self outputListTableView] registerForDraggedTypes:[NSArray arrayWithObject:BasicTableViewDragAndDropDataType]];
 	
 	[[self outputListTableView] reloadData];
