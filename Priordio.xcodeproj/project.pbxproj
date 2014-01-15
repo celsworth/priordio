@@ -10,6 +10,7 @@
 		8312F4221881FF3100F3BD0C /* OutputList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F4211881FF3100F3BD0C /* OutputList.m */; };
 		8312F4251882026300F3BD0C /* PriOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F4241882026300F3BD0C /* PriOutput.m */; };
 		8312F4281885010F00F3BD0C /* OutputListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F4271885010F00F3BD0C /* OutputListCell.m */; };
+		8312F42C18863FC900F3BD0C /* NSMutableArray+MoveObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F42B18863FC900F3BD0C /* NSMutableArray+MoveObject.m */; };
 		83510E7E188036B80022BE1F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83510E7D188036B80022BE1F /* Cocoa.framework */; };
 		83510E88188036B80022BE1F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83510E86188036B80022BE1F /* InfoPlist.strings */; };
 		83510E8A188036B80022BE1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83510E89188036B80022BE1F /* main.m */; };
@@ -32,6 +33,8 @@
 		8312F4241882026300F3BD0C /* PriOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriOutput.m; sourceTree = "<group>"; };
 		8312F4261885010F00F3BD0C /* OutputListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputListCell.h; sourceTree = "<group>"; };
 		8312F4271885010F00F3BD0C /* OutputListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputListCell.m; sourceTree = "<group>"; };
+		8312F42A18863FC900F3BD0C /* NSMutableArray+MoveObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MoveObject.h"; sourceTree = "<group>"; };
+		8312F42B18863FC900F3BD0C /* NSMutableArray+MoveObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MoveObject.m"; sourceTree = "<group>"; };
 		83510E7A188036B80022BE1F /* Priordio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Priordio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83510E7D188036B80022BE1F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		83510E80188036B80022BE1F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -71,6 +74,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8312F42918863FAF00F3BD0C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				8312F42A18863FC900F3BD0C /* NSMutableArray+MoveObject.h */,
+				8312F42B18863FC900F3BD0C /* NSMutableArray+MoveObject.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		83510E71188036B80022BE1F = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +128,7 @@
 				83510E8F188036B80022BE1F /* AppDelegate.h */,
 				83510E90188036B80022BE1F /* AppDelegate.m */,
 				83510EC01880B36D0022BE1F /* Audio Classes */,
+				8312F42918863FAF00F3BD0C /* Categories */,
 				83510E95188036B80022BE1F /* Images.xcassets */,
 				83510E92188036B80022BE1F /* MainMenu.xib */,
 				8312F4201881FF3100F3BD0C /* OutputList.h */,
@@ -228,6 +241,7 @@
 				8312F4251882026300F3BD0C /* PriOutput.m in Sources */,
 				83510EBC18805EBC0022BE1F /* PriAudioDevice.m in Sources */,
 				83510E8A188036B80022BE1F /* main.m in Sources */,
+				8312F42C18863FC900F3BD0C /* NSMutableArray+MoveObject.m in Sources */,
 				83510EBF1880AB600022BE1F /* PriAudioSystem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,6 +11,9 @@
 #import "PriOutput.h"
 #import "OutputListCell.h"
 
+
+#import "NSMutableArray+MoveObject.h"
+
 /*
  each row in our priorities table is a PriOutput
  which is actually a PriAudioDevice+PriAudioDataSource combination.
@@ -18,6 +21,8 @@
  and if an AudioDevice has more than one DataSource (AirPlay, generally?)
  it may appear more than once with different targets to choose.
  */
+
+#define BasicTableViewDragAndDropDataType @"foobar"
 
 @implementation OutputList
 
@@ -27,6 +32,8 @@
 	{
 		_outputs = [NSMutableArray new];
 	}
+	
+	[[self outputListTableView] registerForDraggedTypes:[NSArray arrayWithObject:BasicTableViewDragAndDropDataType]];
 	
 	return self;
 }
@@ -54,11 +61,13 @@
 
 -(void)reload
 {
+	[[self outputListTableView] registerForDraggedTypes:[NSArray arrayWithObject:BasicTableViewDragAndDropDataType]];
+	
 	[[self outputListTableView] reloadData];
 }
 
 
-#pragma mark - NSTableView DataSource
+#pragma mark - NSTableView DataSource & Delegate
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
 	return [[self outputs] count];
@@ -75,22 +84,38 @@
 	return cell;
 }
 
-- (BOOL)tableView:(NSTableView *)tableView shouldReorderColumn:(NSInteger)columnIndex toColumn:(NSInteger)newColumnIndex
-{
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-
-	return YES;
-}
-- (void)tableView:(NSTableView *)tableView didDragTableColumn:(NSTableColumn *)tableColumn
-{
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-
-}
 - (BOOL)tableView:(NSTableView *)aTableView
 	   acceptDrop:(id <NSDraggingInfo>)info
 			  row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
+	NSPasteboard *pboard = [info draggingPasteboard];
+	NSData *data = [pboard dataForType:BasicTableViewDragAndDropDataType];
+	
+	NSIndexSet *rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+	
+	// this is just so the block can mess with the destination row, see below
+	__block NSInteger dRow;
+	
+	// rowIndexes have been moved to row. we only permit one row moving at a time for now
+	// but if we ever support more, this will probably need updating
+	[rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+		
+		dRow = row;
+		
+		// when moving a row down, decrement the target by one
+		// this changes dragging behaviour to something more like the user would expect
+		// try it with and without this to see what I mean..
+		if (dRow > idx) dRow -= 1;
+		
+		NSLog(@"moving row %lu to %ld", (unsigned long)idx, (long)dRow);
+		
+		[[self outputs] moveObjectAtIndex:idx toIndex:dRow];
+	}];
+	
+	// redraw table
+	// TODO: animation?
+	[self reload];
+	
 	return YES;
 }
 
@@ -98,18 +123,17 @@
 				validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row
 	   proposedDropOperation:(NSTableViewDropOperation)operation
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	return NSDragOperationNone;
+	//NSLog(@"%s", __PRETTY_FUNCTION__);
+	
+	return NSTableViewDropAbove == operation;
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
 {
-	// doesn't work, maybe play later
-	//NSPasteboardItem *pboardItem = [[NSPasteboardItem alloc] init];
-	//[pboardItem setString:@"test" forType:NSPasteboardTypeString];
-	//[pboard writeObjects:@[pboardItem]];
-	
-	return YES;
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+    [pboard declareTypes:[NSArray arrayWithObject:BasicTableViewDragAndDropDataType] owner:self];
+    [pboard setData:data forType:BasicTableViewDragAndDropDataType];
+    return YES;
 }
 
 
