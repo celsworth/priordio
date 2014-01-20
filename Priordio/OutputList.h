@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSMutableArray *outputs;
 @property (nonatomic, retain) PriAudioSystem *audioSystem;
+
 @property (nonatomic, retain) IBOutlet NSTableView *outputListTableView;
 
 -(void)enumerateAudioSystem;

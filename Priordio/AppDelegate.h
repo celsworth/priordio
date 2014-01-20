@@ -14,6 +14,8 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource>
 
 @property (assign) IBOutlet NSWindow *window;
+
+// our OutputList instance is created in the nib, so we can assign outlets to it
 @property (nonatomic, weak) IBOutlet OutputList *outputList;
 
 @property (nonatomic, retain) PriAudioSystem *audioSystem;

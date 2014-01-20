@@ -16,7 +16,7 @@
 // we probably don't really want this spewing over into this class
 @property (nonatomic, retain) PriAudioSystem *audioSystem;
 
-@property (nonatomic, retain) PriAudioDataSource *dataSource;
+//@property (nonatomic, retain) PriAudioDataSource *dataSource;
 
 
 // persistent data
@@ -30,6 +30,8 @@
 
 
 -(id)initWithAudioSystem:(PriAudioSystem *)audioSystem;
+
+-(PriAudioDataSource *)dataSource;
 
 -(NSString *)name;
 

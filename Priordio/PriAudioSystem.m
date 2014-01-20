@@ -15,7 +15,7 @@
 {
 	if (self = [super init])
 	{
-		_devices = [PriAudioSystem enumerateDevices];
+		[self enumerateDevices];
 	}
 	return self;
 }
@@ -54,7 +54,7 @@
 	
 }
 
-+(NSArray *)enumerateDevices
+-(BOOL)enumerateDevices
 {
 	// return an array of all audio devices in the system
 	
@@ -72,7 +72,7 @@
 	if (ret)
 	{
 		NSLog(@"%s kAudioHardwarePropertyDevices/size ret=%d", __PRETTY_FUNCTION__, ret);
-		return tmp;
+		return NO;
 	}
 	
 	// allocate space for those devices
@@ -84,7 +84,8 @@
 	if (ret)
 	{
 		NSLog(@"%s kAudioHardwarePropertyDevices ret=%d", __PRETTY_FUNCTION__, ret);
-		goto out;
+		free(deviceList);
+		return NO;
 	}
 	
 	// and convert to a more useful form
@@ -104,11 +105,11 @@
 		}
 	}
 	
-	out:
 	free(deviceList);
 	
-	//return tmp;
-	return [NSArray arrayWithArray:tmp];
+	[self setDevices:[NSArray arrayWithArray:tmp]];
+	
+	return YES;
 }
 
 -(void)setupDevicesNotification
@@ -124,6 +125,8 @@
 										   const AudioObjectPropertyAddress *inAddresses)
 	{
 		NSLog(@"an audio device was added/removed?");
+		
+		[self enumerateDevices];
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPriAudioSystemNotificationDeviceAddedOrRemoved object:self userInfo:nil];
 	};
@@ -148,12 +151,13 @@
 	{
 		NSLog(@"default output changed?");
 		
+		[self enumerateDevices];
+		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPriAudioSystemNotificationDeviceDefaultChanged object:self userInfo:nil];
 	};
 	
 	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &addr,
 													   dispatch_get_main_queue(), b);
-	
 	
 	
 }

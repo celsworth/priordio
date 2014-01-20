@@ -27,12 +27,17 @@
 -(void)setDeviceUID:(NSString *)deviceUID
 {
 	_deviceUID = deviceUID;
-	[self setDataSource:[[self audioSystem] findDevice:[self deviceUID] dataSource:[self dataSourceName]]];
+	//[self setDataSource:[[self audioSystem] findDevice:[self deviceUID] dataSource:[self dataSourceName]]];
 }
 -(void)setDataSourceName:(NSString *)dataSourceName
 {
 	_dataSourceName = dataSourceName;
-	[self setDataSource:[[self audioSystem] findDevice:[self deviceUID] dataSource:[self dataSourceName]]];
+	//[self setDataSource:[[self audioSystem] findDevice:[self deviceUID] dataSource:[self dataSourceName]]];
+}
+
+-(PriAudioDataSource *)dataSource
+{
+	return [[self audioSystem] findDevice:[self deviceUID] dataSource:[self dataSourceName]];
 }
 
 -(NSString *)name

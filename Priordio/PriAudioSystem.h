@@ -24,7 +24,7 @@
 
 +(NSString *)osError:(UInt32)err;
 
-+(NSArray *)enumerateDevices;
+-(BOOL)enumerateDevices;
 
 -(void)setupDevicesNotification;
 -(void)setupDefaultChangeNotification;
