@@ -59,18 +59,18 @@
 	// to be run on first app start? then save array and use it thereafter
 	NSMutableArray *arr = [NSMutableArray new];
 	
-	[[[self audioSystem] devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
-		
-		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
+	for (PriAudioDevice *device in [[self audioSystem] devices])
+	{
+		for (PriAudioDataSource *dataSource in [device dataSources])
+		{
 			// create a PriOutput for this device/datasource combination
 			PriOutput *entry = [[PriOutput alloc] initWithAudioSystem:[self audioSystem]];
 			[entry setDeviceUID:[device uid]];
 			[entry setDataSourceName:[dataSource name]];
 			
 			[arr addObject:entry];
-		}];
-		
-	}];
+		}
+	}
 	
 	[self setOutputs:arr];
 }

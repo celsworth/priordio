@@ -166,17 +166,15 @@
 {
 	// look for deviceUID in our current list of known objects
 	
-	// allow ret to be set inside blocks
-	__block PriAudioDevice *ret = NULL;
+	PriAudioDevice *ret = NULL;
 	
-	[[self devices] enumerateObjectsUsingBlock:^(PriAudioDevice *device, NSUInteger idx, BOOL *stop) {
-		
+	for (PriAudioDevice *device in [self devices])
+	{
 		if ([[device uid] isEqualToString:deviceUID])
 		{
-			ret = device;
-			*stop = YES;
+			return device;
 		}
-	}];
+	}
 	
 	return ret;
 }
@@ -192,13 +190,13 @@
 	PriAudioDevice *device = [self findDevice:deviceUID];
 	if (device)
 	{
-		[[device dataSources] enumerateObjectsUsingBlock:^(PriAudioDataSource *dataSource, NSUInteger idx, BOOL *stop) {
+		for (PriAudioDataSource *dataSource in [device dataSources])
+		{
 			if ([[dataSource name] isEqualToString:dataSourceName])
 			{
-				ret = dataSource;
-				*stop = YES;
+				return dataSource;
 			}
-		}];
+		}
 	}
 	
 	return ret;
