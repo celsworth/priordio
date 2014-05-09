@@ -46,7 +46,7 @@
 		// so just report the device name for now
 		return [_device name];
 	
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSourceNameForIDCFString,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
@@ -62,7 +62,7 @@
 	
 	UInt32 avtSize = sizeof(avt);
 	
-	OSStatus ret = AudioObjectGetPropertyData([[self device] deviceID], &addr, 0, NULL, &avtSize, &avt);
+	OSStatus ret = AudioObjectGetPropertyData([[self device] deviceID], &pa, 0, NULL, &avtSize, &avt);
 	if (ret)
 	{
 		// AudioObjectGetPropertyData failure
@@ -79,11 +79,10 @@
 	return [[self device] deviceID] == [PriAudioDevice defaultAudioDevice];
 }
 
-// untested, just guessing based on
 // http://joris.kluivers.nl/blog/2012/07/25/per-application-airplay-in-mountain-lion/
 -(void)setAsDefault
 {
-	AudioObjectPropertyAddress tmpAddr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioHardwarePropertyDefaultOutputDevice,
 		kAudioObjectPropertyScopeGlobal,
 		kAudioObjectPropertyElementMaster
@@ -92,7 +91,7 @@
 	AudioDeviceID deviceID = [[self device] deviceID];
 	
 	OSStatus ret;
-	ret = AudioObjectSetPropertyData(kAudioObjectSystemObject, &tmpAddr, 0, NULL,
+	ret = AudioObjectSetPropertyData(kAudioObjectSystemObject, &pa, 0, NULL,
 										sizeof(AudioDeviceID), &deviceID);
 	if (ret)
 	{
@@ -101,9 +100,9 @@
 	
 	UInt32 ds = [self dataSource];
 	
-	tmpAddr.mSelector = kAudioDevicePropertyDataSource;
-	tmpAddr.mScope = kAudioDevicePropertyScopeOutput;
-	ret = AudioObjectSetPropertyData(deviceID, &tmpAddr, 0, NULL, sizeof(UInt32), &ds);
+	pa.mSelector = kAudioDevicePropertyDataSource;
+	pa.mScope = kAudioDevicePropertyScopeOutput;
+	ret = AudioObjectSetPropertyData(deviceID, &pa, 0, NULL, sizeof(UInt32), &ds);
 	if (ret)
 	{
 		abort(); // FIXME

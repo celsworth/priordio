@@ -26,7 +26,7 @@
 		[self setupNotifications];
 	}
 	
-	[self transportType];
+	//[self transportType];
 	
 	return self;
 }
@@ -43,7 +43,7 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@ %@ (%d output channels) (%@)",
+	return [NSString stringWithFormat:@"%@ ; %@ ; %@ (%d output channels) (%@)",
 			[self name], [self uid], [PriAudioDevice transportTypeAsName:[self transportType]],
 			[self outputChannelCount],
 			[[self dataSources] componentsJoinedByString:@", "]];
@@ -56,14 +56,14 @@
 
 +(AudioDeviceID)defaultAudioDevice
 {
-	const AudioObjectPropertyAddress defaultAddr = {
+	const AudioObjectPropertyAddress pa = {
 		kAudioHardwarePropertyDefaultOutputDevice,
 		kAudioObjectPropertyScopeGlobal,
 		kAudioObjectPropertyElementMaster
 	};
 	AudioDeviceID defaultDevice = 0;
 	UInt32 defaultSize = sizeof(AudioDeviceID);
-	OSStatus ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &defaultAddr, 0, NULL, &defaultSize, &defaultDevice);
+	OSStatus ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &pa, 0, NULL, &defaultSize, &defaultDevice);
 	if (ret)
 		abort(); // FIXME
 	
@@ -72,7 +72,7 @@
 
 -(void)setupNotifications
 {
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSource,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
@@ -82,16 +82,16 @@
 	{
 		// triggered when a datasource changes
 		
-		NSLog(@"block fired");
+		NSLog(@"datasource change block fired");
 		
 		UInt32 dataSourceId = [self currentDataSource];
 		
 		if (dataSourceId == kAudioDeviceOutputSpeaker) {
 			// Recognized as internal speakers
-			NSLog(@"speakers?");
+			NSLog(@"speakers");
 		} else if (dataSourceId == kAudioDeviceOutputHeadphone) {
 			// Recognized as headphones
-			NSLog(@"headphones?");
+			NSLog(@"headphones");
 		}
 		
 		// TODO: post NSNotification?
@@ -99,7 +99,7 @@
 	};
 	
 	
-	OSStatus ret = AudioObjectAddPropertyListenerBlock([self device], &addr, dispatch_get_main_queue(), b);
+	OSStatus ret = AudioObjectAddPropertyListenerBlock([self device], &pa, dispatch_get_main_queue(), b);
 	if (ret)
 	{
 		abort(); // FIXME
@@ -192,14 +192,14 @@
 
 -(UInt32)outputChannelCount
 {
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyStreamConfiguration,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
 	};
 	
 	UInt32 size = 0;
-	OSStatus ret = AudioObjectGetPropertyDataSize([self device], &addr, 0, NULL, &size);
+	OSStatus ret = AudioObjectGetPropertyDataSize([self device], &pa, 0, NULL, &size);
 	if (ret)
 	{
 		NSLog(@"%s kAudioDevicePropertyStreamConfiguration/size ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
@@ -211,7 +211,7 @@
 	
 	UInt32 outputChannelCount = 0;
 	
-	ret = AudioObjectGetPropertyData([self device], &addr, 0, NULL, &tmpSize, tmp);
+	ret = AudioObjectGetPropertyData([self device], &pa, 0, NULL, &tmpSize, tmp);
 	if (ret)
 	{
 		NSLog(@"%s kAudioDevicePropertyStreamConfiguration ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
@@ -228,7 +228,7 @@
 
 -(UInt32)currentDataSource
 {
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSource,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
@@ -237,11 +237,11 @@
 	UInt32 dataSourceId = 0;
 	UInt32 dataSourceIdSize = sizeof(UInt32);
 	
-	OSStatus ret = AudioObjectGetPropertyData([self device], &addr, 0, NULL,
+	OSStatus ret = AudioObjectGetPropertyData([self device], &pa, 0, NULL,
 											  &dataSourceIdSize, &dataSourceId);
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
+		NSLog(@"%s %@ kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, self, [PriAudioSystem osError:ret]);
 		return 0;
 	}
 	return dataSourceId;
@@ -249,7 +249,7 @@
 
 -(UInt32)dataSourceCount
 {
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSources,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
@@ -258,7 +258,7 @@
 	// could use AudioObjectHasProperty instead
 	
 	UInt32 size = 0;
-	OSStatus ret = AudioObjectGetPropertyDataSize(_device, &addr, 0, NULL, &size);
+	OSStatus ret = AudioObjectGetPropertyDataSize([self device], &pa, 0, NULL, &size);
 	if (ret == kAudioHardwareUnknownPropertyError)
 	{
 		// this just means the device doesn't support datasources, but it has one nonetheless
@@ -289,7 +289,7 @@
 	UInt32 *tmp = calloc(count, sizeof(UInt32));
 	UInt32 tmpSize = count * sizeof(UInt32);
 	
-	AudioObjectPropertyAddress tmpAddr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSources,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
@@ -297,7 +297,7 @@
 	
 	// could use AudioObjectHasProperty instead
 	
-	OSStatus ret = AudioObjectGetPropertyData([self device], &tmpAddr, 0, NULL, &tmpSize, tmp);
+	OSStatus ret = AudioObjectGetPropertyData([self device], &pa, 0, NULL, &tmpSize, tmp);
 	if (ret == kAudioHardwareUnknownPropertyError)
 	{
 		// this just means the device doesn't support datasources, but it has one nonetheless
@@ -308,7 +308,8 @@
 	// any other error
 	if (ret)
 	{
-		NSLog(@"%s kAudioDevicePropertyDataSource ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
+		NSLog(@"%s %@ kAudioDevicePropertyDataSource ret=%@",
+			  __PRETTY_FUNCTION__, self, [PriAudioSystem osError:ret]);
 		goto out;
 	}
 	

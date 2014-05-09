@@ -22,7 +22,7 @@ enum {
 
 @interface PriAudioDevice : NSObject
 
-// array of AudioOutputs
+// array of PriAudioDataSource
 @property (nonatomic, retain) NSArray *dataSources;
 
 @property (nonatomic, assign) AudioDeviceID device;

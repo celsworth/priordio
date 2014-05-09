@@ -10,7 +10,7 @@
 
 #import "PriAudioSystem.h"
 
-@interface OutputList : NSObject <NSTableViewDataSource, NSTableViewDelegate>
+@interface OutputList : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (nonatomic, retain) NSMutableArray *outputs;
 @property (nonatomic, retain) PriAudioSystem *audioSystem;

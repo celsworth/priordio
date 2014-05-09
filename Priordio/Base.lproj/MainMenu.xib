@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D55" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -657,15 +657,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="454" height="373"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwE-2e-KYt">
-                        <rect key="frame" x="20" y="20" width="300" height="333"/>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwE-2e-KYt">
+                        <rect key="frame" x="-1" y="-1" width="300" height="375"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="FwI-hO-00m">
-                            <rect key="frame" x="1" y="1" width="298" height="331"/>
+                            <rect key="frame" x="1" y="1" width="298" height="373"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="JwB-mR-d5L">
-                                    <rect key="frame" x="0.0" y="0.0" width="298" height="331"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="JwB-mR-d5L">
+                                    <rect key="frame" x="0.0" y="0.0" width="298" height="373"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -744,18 +744,30 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2uc-fm-j7j">
+                        <rect key="frame" x="307" y="311" width="127" height="43"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="smallSquare" title="Set Default" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fuS-Cq-gIf">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setDefaultButtonPressed:" target="494" id="Pn3-7c-OfB"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="bwE-2e-KYt" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="20" id="UOy-N5-oD0"/>
-                    <constraint firstItem="bwE-2e-KYt" firstAttribute="top" secondItem="372" secondAttribute="top" constant="20" id="bAc-qS-CDm"/>
-                    <constraint firstAttribute="trailing" secondItem="bwE-2e-KYt" secondAttribute="trailing" constant="134" id="g8z-N4-bkj"/>
-                    <constraint firstAttribute="bottom" secondItem="bwE-2e-KYt" secondAttribute="bottom" constant="20" id="kAQ-eH-MvM"/>
+                    <constraint firstItem="bwE-2e-KYt" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="-1" id="UOy-N5-oD0"/>
+                    <constraint firstItem="bwE-2e-KYt" firstAttribute="top" secondItem="372" secondAttribute="top" constant="-1" id="bAc-qS-CDm"/>
+                    <constraint firstAttribute="trailing" secondItem="bwE-2e-KYt" secondAttribute="trailing" constant="155" id="g8z-N4-bkj"/>
+                    <constraint firstAttribute="bottom" secondItem="bwE-2e-KYt" secondAttribute="bottom" constant="-1" id="kAQ-eH-MvM"/>
                 </constraints>
             </view>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
                 <outlet property="outputList" destination="gv5-EX-doL" id="TBt-jU-sab"/>
+                <outlet property="setDefaultButton" destination="2uc-fm-j7j" id="png-HP-cHv"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>

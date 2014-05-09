@@ -63,12 +63,12 @@
 	UInt32 propSize;
 	
 	// get number of devices first
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioHardwarePropertyDevices,
 		kAudioObjectPropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
 	};
-	OSStatus ret = AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &addr, 0, NULL, &propSize);
+	OSStatus ret = AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &pa, 0, NULL, &propSize);
 	if (ret)
 	{
 		NSLog(@"%s kAudioHardwarePropertyDevices/size ret=%d", __PRETTY_FUNCTION__, ret);
@@ -80,7 +80,7 @@
 	AudioDeviceID *deviceList = (AudioDeviceID *)calloc(numDevices, sizeof(AudioDeviceID));
 	
 	// fetch device info
-	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &propSize, deviceList);
+	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &pa, 0, NULL, &propSize, deviceList);
 	if (ret)
 	{
 		NSLog(@"%s kAudioHardwarePropertyDevices ret=%d", __PRETTY_FUNCTION__, ret);
@@ -101,7 +101,7 @@
 		else
 		{
 			// debugging for now
-			NSLog(@"SKIPPING %@ BECAUSE OUTPUTCHANNELCOUNT==0", [dev name]);
+			NSLog(@"%s SKIPPING %@ (outputChannelCount==0)", __PRETTY_FUNCTION__, [dev name]);
 		}
 	}
 	
@@ -115,7 +115,7 @@
 -(void)setupDevicesNotification
 {
 	// testing..
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioHardwarePropertyDevices,
 		kAudioObjectPropertyScopeGlobal,
 		kAudioObjectPropertyElementMaster
@@ -131,7 +131,7 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPriAudioSystemNotificationDeviceAddedOrRemoved object:self userInfo:nil];
 	};
 	
-	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &addr,
+	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &pa,
 													   dispatch_get_main_queue(), b);
 	
 	
@@ -140,7 +140,7 @@
 -(void)setupDefaultChangeNotification
 {
 	// testing..
-	AudioObjectPropertyAddress addr = {
+	AudioObjectPropertyAddress pa = {
 		kAudioHardwarePropertyDefaultOutputDevice,
 		kAudioObjectPropertyScopeGlobal,
 		kAudioObjectPropertyElementMaster
@@ -156,7 +156,7 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPriAudioSystemNotificationDeviceDefaultChanged object:self userInfo:nil];
 	};
 	
-	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &addr,
+	OSStatus ret = AudioObjectAddPropertyListenerBlock(kAudioObjectSystemObject, &pa,
 													   dispatch_get_main_queue(), b);
 	
 	

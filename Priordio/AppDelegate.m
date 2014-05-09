@@ -11,6 +11,7 @@
 #import "CoreAudio/CoreAudio.h"
 
 #import "PriAudioDevice.h"
+#import "PriOutput.h"
 
 @implementation AppDelegate
 
@@ -45,6 +46,26 @@
 	[dataSources enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSLog(@"datasource is %@", [obj name]);
 	}];
+}
+
+
+-(IBAction)setDefaultButtonPressed:(id)sender
+{
+	NSIndexSet *selectedRows = [[self.outputList outputListTableView] selectedRowIndexes];
+	
+	// we'll disable the button for no selection eventually
+	if ([selectedRows count] == 0) return;
+	
+	assert([selectedRows count] == 1);
+		
+	NSUInteger index = [selectedRows firstIndex];
+	
+	// get the OutputDevice / DataSource..
+	PriOutput *o = [self.outputList outputs][index];
+	PriAudioDataSource *ds = [o dataSource];
+	
+	NSLog(@"%@", ds);
+	[ds setAsDefault];
 }
 
 @end
