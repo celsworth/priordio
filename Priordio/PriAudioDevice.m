@@ -290,7 +290,7 @@
 	UInt32 tmpSize = count * sizeof(UInt32);
 	
 	AudioObjectPropertyAddress tmpAddr = {
-		kAudioDevicePropertyDataSource,
+		kAudioDevicePropertyDataSources,
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
 	};
