@@ -11,14 +11,17 @@
 #import "PriAudioSystem.h"
 #import "OutputList.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource>
+@interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 
 // our OutputList instance is created in the nib, so we can assign outlets to it
 @property (nonatomic, weak) IBOutlet OutputList *outputList;
 
+@property (nonatomic, weak) IBOutlet NSButton *setDefaultButton;
+
 @property (nonatomic, retain) PriAudioSystem *audioSystem;
 
+-(IBAction)setDefaultButtonPressed:(id)sender;
 
 @end
