@@ -84,14 +84,14 @@
 		
 		NSLog(@"datasource change block fired");
 		
-		UInt32 dataSourceId = [self currentDataSource];
-		
-		if (dataSourceId == kAudioDeviceOutputSpeaker) {
-			// Recognized as internal speakers
-			NSLog(@"speakers");
-		} else if (dataSourceId == kAudioDeviceOutputHeadphone) {
-			// Recognized as headphones
-			NSLog(@"headphones");
+		switch([self currentDataSource])
+		{
+			case kAudioDeviceOutputSpeaker:
+				NSLog(@"speakers");
+				break;
+			case kAudioDeviceOutputHeadphone:
+				NSLog(@"headphones");
+				break;
 		}
 		
 		// TODO: post NSNotification?
@@ -233,7 +233,7 @@
 		kAudioDevicePropertyScopeOutput,
 		kAudioObjectPropertyElementMaster
 	};
-
+	
 	return AudioObjectHasProperty([self device], &pa);
 }
 
@@ -264,9 +264,9 @@
 -(UInt32)dataSourceCount
 {
 	if (![self supportsDataSources])
-		/* doesn't support datasources, so we make up a dummy one */
+	/* doesn't support datasources, so we make up a dummy one */
 		return 1;
-
+	
 	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSources,
 		kAudioDevicePropertyScopeOutput,
@@ -299,7 +299,7 @@
 	}
 	
 	UInt32 count = [self dataSourceCount];
-
+	
 	if (count == 0)
 		return arr;
 	
