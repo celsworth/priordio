@@ -71,7 +71,7 @@
 	OSStatus ret = AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &pa, 0, NULL, &propSize);
 	if (ret)
 	{
-		NSLog(@"%s kAudioHardwarePropertyDevices/size ret=%d", __PRETTY_FUNCTION__, ret);
+		NSLog(@"%s kAudioHardwarePropertyDevices/size ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		return NO;
 	}
 	
@@ -83,7 +83,7 @@
 	ret = AudioObjectGetPropertyData(kAudioObjectSystemObject, &pa, 0, NULL, &propSize, deviceList);
 	if (ret)
 	{
-		NSLog(@"%s kAudioHardwarePropertyDevices ret=%d", __PRETTY_FUNCTION__, ret);
+		NSLog(@"%s kAudioHardwarePropertyDevices ret=%@", __PRETTY_FUNCTION__, [PriAudioSystem osError:ret]);
 		free(deviceList);
 		return NO;
 	}
