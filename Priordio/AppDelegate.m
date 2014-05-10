@@ -12,6 +12,7 @@
 
 #import "PriAudioDevice.h"
 #import "PriOutput.h"
+#import "OutputList.h"
 
 @implementation AppDelegate
 
@@ -25,11 +26,7 @@
 	[[self audioSystem] setupDevicesNotification];
 	[[self audioSystem] setupDefaultChangeNotification];
 	
-	// outputList initialised in nib, we need to tell it about the audioSystem we've allocated
-	// so it can watch for notifications, enumerate lists, etc.
-	[[self outputList] setAudioSystem:[self audioSystem]];
-	
-	[[self outputList] enumerateAudioSystem];
+	[[self outputList] setOutputs:[self enumerateAudioSystem]];
 	[[self outputList] reload];
 	
 	// debugging..
@@ -43,9 +40,32 @@
 	NSLog(@"default device has %lu datasources", [dataSources count]);
 	NSLog(@"current datasource on default device is %d", [defaultDevice currentDataSource]);
 	
-	[dataSources enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		NSLog(@"datasource is %@", [obj name]);
-	}];
+	for (PriAudioDataSource *dataSource in dataSources)
+	{
+		NSLog(@"datasource is %@", [dataSource name]);
+	}
+}
+
+// setup list of PriOutput to show in the table
+-(NSMutableArray *)enumerateAudioSystem
+{
+	// to be run on first app start? then save array and use it thereafter
+	NSMutableArray *arr = [NSMutableArray new];
+	
+	for (PriAudioDevice *device in [[self audioSystem] devices])
+	{
+		for (PriAudioDataSource *dataSource in [device dataSources])
+		{
+			// create a PriOutput for this device/datasource combination
+			PriOutput *entry = [[PriOutput alloc] initWithAudioSystem:[self audioSystem]];
+			[entry setDeviceUID:[device uid]];
+			[entry setDataSourceName:[dataSource name]];
+			
+			[arr addObject:entry];
+		}
+	}
+	
+	return arr;
 }
 
 

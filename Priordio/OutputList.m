@@ -36,6 +36,9 @@
 	// this doesn't work yet because the view isn't loaded. not sure where to put it, it's in -reload for now
 	//[[self outputListTableView] registerForDraggedTypes:[NSArray arrayWithObject:BasicTableViewDragAndDropDataType]];
 	
+	/*
+	 * This doesn't belong here, OutputList shouldn't care about the audioSystem; we'll tell OutputList
+	 * when things change instead
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPriAudioSystemNotificationDeviceDefaultChanged
 													  object:[self audioSystem]
 													   queue:[NSOperationQueue mainQueue]
@@ -50,30 +53,11 @@
 													  [self reload];
 												  }];
 	
-
+	 */
+	
 	return self;
 }
 
--(void)enumerateAudioSystem
-{
-	// to be run on first app start? then save array and use it thereafter
-	NSMutableArray *arr = [NSMutableArray new];
-	
-	for (PriAudioDevice *device in [[self audioSystem] devices])
-	{
-		for (PriAudioDataSource *dataSource in [device dataSources])
-		{
-			// create a PriOutput for this device/datasource combination
-			PriOutput *entry = [[PriOutput alloc] initWithAudioSystem:[self audioSystem]];
-			[entry setDeviceUID:[device uid]];
-			[entry setDataSourceName:[dataSource name]];
-			
-			[arr addObject:entry];
-		}
-	}
-	
-	[self setOutputs:arr];
-}
 
 -(void)reload
 {

@@ -8,16 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "PriAudioSystem.h"
-
 @interface OutputList : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (nonatomic, retain) NSMutableArray *outputs;
-@property (nonatomic, retain) PriAudioSystem *audioSystem;
 
 @property (nonatomic, retain) IBOutlet NSTableView *outputListTableView;
 
--(void)enumerateAudioSystem;
 -(void)reload;
 
 @end
