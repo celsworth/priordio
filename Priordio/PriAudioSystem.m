@@ -183,10 +183,7 @@
 -(PriAudioDataSource *)findDevice:(NSString *)deviceUID dataSource:(NSString *)dataSourceName
 {
 	// look for deviceUID and dataSourceName in our current list of known objects
-	
-	// allow ret to be set inside blocks
-	__block PriAudioDataSource *ret = NULL;
-	
+		
 	PriAudioDevice *device = [self findDevice:deviceUID];
 	if (device)
 	{
@@ -199,7 +196,7 @@
 		}
 	}
 	
-	return ret;
+	return NULL;
 }
 
 
