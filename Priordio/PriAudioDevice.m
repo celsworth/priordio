@@ -226,8 +226,22 @@
 	return outputChannelCount;
 }
 
+-(BOOL)supportsDataSources
+{
+	AudioObjectPropertyAddress pa = {
+		kAudioDevicePropertyDataSources,
+		kAudioDevicePropertyScopeOutput,
+		kAudioObjectPropertyElementMaster
+	};
+
+	return AudioObjectHasProperty([self device], &pa);
+}
+
 -(UInt32)currentDataSource
 {
+	if (![self supportsDataSources])
+		return 0;
+	
 	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSource,
 		kAudioDevicePropertyScopeOutput,
@@ -249,6 +263,10 @@
 
 -(UInt32)dataSourceCount
 {
+	if (![self supportsDataSources])
+		/* doesn't support datasources, so we make up a dummy one */
+		return 1;
+
 	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSources,
 		kAudioDevicePropertyScopeOutput,
@@ -259,13 +277,6 @@
 	
 	UInt32 size = 0;
 	OSStatus ret = AudioObjectGetPropertyDataSize([self device], &pa, 0, NULL, &size);
-	if (ret == kAudioHardwareUnknownPropertyError)
-	{
-		// this just means the device doesn't support datasources, but it has one nonetheless
-		return 1;
-	}
-	
-	// any other error
 	if (ret)
 	{
 		NSLog(@"%s %@ kAudioDevicePropertyDataSources/size ret=%@",
@@ -278,10 +289,17 @@
 
 -(NSArray *)enumerateDataSources
 {
-	UInt32 count = [self dataSourceCount];
-	
 	NSMutableArray *arr = [NSMutableArray new];
 	
+	if (![self supportsDataSources])
+	{
+		/* doesn't support datasources, so we make up a dummy one */
+		[arr addObject:[[PriAudioDataSource alloc] initWithDevice:self]];
+		return [NSArray arrayWithArray:arr];
+	}
+	
+	UInt32 count = [self dataSourceCount];
+
 	if (count == 0)
 		return arr;
 	
@@ -298,14 +316,6 @@
 	// could use AudioObjectHasProperty instead
 	
 	OSStatus ret = AudioObjectGetPropertyData([self device], &pa, 0, NULL, &tmpSize, tmp);
-	if (ret == kAudioHardwareUnknownPropertyError)
-	{
-		// this just means the device doesn't support datasources, but it has one nonetheless
-		[arr addObject:[[PriAudioDataSource alloc] initWithDevice:self]];
-		goto out;
-	}
-	
-	// any other error
 	if (ret)
 	{
 		NSLog(@"%s %@ kAudioDevicePropertyDataSource ret=%@",
