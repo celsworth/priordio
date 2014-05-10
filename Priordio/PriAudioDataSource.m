@@ -12,6 +12,7 @@
 #import "PriAudioDataSource.h"
 
 #import "PriAudioDevice.h"
+#import "PriAudioSystem.h"
 
 @implementation PriAudioDataSource
 
@@ -42,9 +43,9 @@
 {
 	// nil dataSource means we're not "real", we're a made up source because the device
 	// reported it didn't support multiple dataSources
-	if (!_dataSource)
+	if (![self dataSource])
 		// so just report the device name for now
-		return [_device name];
+		return [[self device] name];
 	
 	AudioObjectPropertyAddress pa = {
 		kAudioDevicePropertyDataSourceNameForIDCFString,
@@ -87,16 +88,24 @@
 		kAudioObjectPropertyScopeGlobal,
 		kAudioObjectPropertyElementMaster
 	};
-
+	
+	
+	/* set the device as default */
+	
 	AudioDeviceID deviceID = [[self device] deviceID];
 	
 	OSStatus ret;
 	ret = AudioObjectSetPropertyData(kAudioObjectSystemObject, &pa, 0, NULL,
-										sizeof(AudioDeviceID), &deviceID);
+									 sizeof(AudioDeviceID), &deviceID);
 	if (ret)
 	{
-		abort(); // FIXME
+		NSLog(@"%s %@ kAudioHardwarePropertyDefaultOutputDevice ret=%@",
+			  __PRETTY_FUNCTION__, self, [PriAudioSystem osError:ret]);
+		return;
 	}
+	
+	
+	/* set the datasource as default */
 	
 	UInt32 ds = [self dataSource];
 	
@@ -105,10 +114,9 @@
 	ret = AudioObjectSetPropertyData(deviceID, &pa, 0, NULL, sizeof(UInt32), &ds);
 	if (ret)
 	{
-		abort(); // FIXME
+		NSLog(@"%s %@ kAudioDevicePropertyDataSource ret=%@",
+			  __PRETTY_FUNCTION__, self, [PriAudioSystem osError:ret]);
 	}
-
-	
 }
 
 @end
